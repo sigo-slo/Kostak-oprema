@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_logo">
+
+    <EditText
+        android:id="@+id/ET_username"
+        style="@style/Widget.AppCompat.Light.AutoCompleteTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="60dp"
+        android:autofillHints=""
+        android:background="#11435AA0"
+
+        android:ems="10"
+        android:hint="@string/user"
+        android:inputType="textPersonName"
+        android:padding="10dp"
+        android:singleLine="true"
+        android:textAlignment="center"
+        android:textColor="#3949AB"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/LogoView"
+        android:gravity="center_horizontal" />
+
+    <EditText
+        android:id="@+id/ET_password"
+        style="@style/Widget.AppCompat.Light.AutoCompleteTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="60dp"
+        android:autofillHints=""
+        android:background="#11435AA0"
+        android:ems="10"
+
+        android:hint="@string/password"
+        android:inputType="numberPassword"
+        android:padding="10dp"
+        android:singleLine="true"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ET_username"
+        android:gravity="center_horizontal" />
+
+    <ImageView
+        android:id="@+id/LogoView"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="100dp"
+        android:contentDescription="@string/kostak_komunalno_in_gradbeno_podjetje_d_d"
+        android:src="@drawable/kostak_logo_mali"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/loginButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@android:color/transparent"
+        android:text="@string/login_button_text"
+        android:textAlignment="center"
+        android:textColor="#3949AB"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ET_password"
+        android:gravity="center_horizontal">
+
+    </Button>
+</androidx.constraintlayout.widget.ConstraintLayout>
