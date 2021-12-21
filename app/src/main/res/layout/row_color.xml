@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/colorrow_background_selector"
     android:id="@+id/ll"
     android:layout_width="wrap_content"
     android:layout_height="@dimen/row_height"
     android:layout_marginEnd="2dp"
     android:layout_marginRight="2dp"
-    android:background="@drawable/colorrow_background_selector"
     android:clickable="true"
+    android:fadingEdge="horizontal|vertical"
+    android:fadingEdgeLength="5dp"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    android:orientation="horizontal">
-
+    android:orientation="horizontal"
+    android:padding="5dp">
 
     <TextView
         android:id="@+id/txtrow"
@@ -57,11 +59,11 @@
         android:gravity="center"
         android:textColor="@color/colorPrimaryText" />
 
-    <!--<ImageView
-        android:id="@+id/imgLogo"
+    <ImageView
+        android:id="@+id/slika2"
         android:layout_width="@dimen/cell_width"
         android:layout_height="match_parent"
         android:layout_margin="@dimen/margin"
         android:contentDescription="@string/logo"
-        android:scaleType="center" />-->
+        android:scaleType="center" />
 </LinearLayout>

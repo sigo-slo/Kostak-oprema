@@ -7,10 +7,12 @@
     android:layout_marginRight="2dp"
     android:background="@drawable/row_background_selector"
     android:clickable="true"
+    android:fadingEdge="horizontal|vertical"
+    android:fadingEdgeLength="5dp"
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:orientation="horizontal"
->
+    android:padding="5dp">
 
     <TextView
         android:id="@+id/txtrow"
@@ -57,11 +59,13 @@
         android:gravity="center"
         android:textColor="@color/colorPrimaryText" />
 
-    <!--<ImageView
-        android:id="@+id/imgLogo"
+    <ImageView
+        android:id="@+id/slika2"
         android:layout_width="@dimen/cell_width"
         android:layout_height="match_parent"
         android:layout_margin="@dimen/margin"
         android:contentDescription="@string/logo"
-        android:scaleType="center" />-->
+        android:scaleType="center"
+        android:textColor="@color/colorPrimaryText"/>
+
 </LinearLayout>

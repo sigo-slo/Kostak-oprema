@@ -1,6 +1,7 @@
 package si.kostakdd.ui.main;
 
 import android.content.Context;
+import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
@@ -9,16 +10,17 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import si.kostakdd.R;
-import si.kostakdd.stran1;
-import si.kostakdd.stran2;
-import si.kostakdd.stran3;
+import si.kostakdd.Stran1;
+import si.kostakdd.Stran2;
+import si.kostakdd.Stran3;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
+    protected int currentPosition = -1;
+    protected Fragment currentFragment;
     @StringRes
     private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2, R.string.tab_text_3};
     private final Context mContext;
@@ -35,13 +37,13 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         Fragment fragment = null;
         switch (position){
             case 0:
-                fragment = new stran1();
+                fragment = new Stran1();
                 break;
             case 1:
-                fragment = new stran2();
+                fragment = new Stran2();
                 break;
             case 2:
-                fragment = new stran3();
+                fragment = new Stran3();
         }
         return fragment;
     }
@@ -56,5 +58,21 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     public int getCount() {
         // Show 2 total pages.
         return 2;
+    }
+    @Override
+    public void setPrimaryItem(ViewGroup container, int position, Object object) {
+        super.setPrimaryItem(container, position, object);
+        this.currentPosition = position;
+        if (object instanceof Fragment) {
+            this.currentFragment = (Fragment) object;
+        }
+    }
+
+    public int getCurrentPosition() {
+        return currentPosition;
+    }
+
+    public Fragment getCurrentFragment() {
+        return currentFragment;
     }
 }

@@ -8,11 +8,13 @@ import static si.kostakdd.Constants.IMAGE_FORMAT;
 import static si.kostakdd.Constants.MY_PERMISSIONS_REQUEST_LOCATION;
 import static si.kostakdd.Constants.REQUEST_CODE_SCAN_QR;
 import static si.kostakdd.Constants.REQUEST_CODE_TAKEPICTURE;
+import static si.kostakdd.Constants.SERVER_IMG_FOLDER;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.app.PendingIntent;
 import android.app.SearchManager;
 import android.content.Context;
@@ -44,6 +46,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -54,11 +58,10 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.exifinterface.media.ExifInterface;
-import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
-import com.bumptech.glide.Glide;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -66,6 +69,7 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.SettingsClient;
+import com.google.android.gms.maps.MapView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
@@ -83,6 +87,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -92,18 +97,20 @@ import si.kostakdd.connect.PostAsync;
 import si.kostakdd.databinding.ActivityMainBinding;
 import si.kostakdd.parser.NdefMessageParser;
 import si.kostakdd.record.ParsedNdefRecord;
-import si.kostakdd.tabela.FixedGridLayoutManager;
 import si.kostakdd.tabela.LineItem;
 import si.kostakdd.tabela.RowAdapter;
+import si.kostakdd.ui.SectionsStateFragmentAdapter;
+import si.kostakdd.ui.main.CustomViewPager;
 import si.kostakdd.ui.main.SectionsPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
-    private stran1 s1 = new stran1();
+    //private stran1 s1 = new stran1();
     public String inv_st;
+    public String username,imgURL;
+    SectionsPagerAdapter sectionsPagerAdapter;
 
-
-    public String username;
+    private CustomViewPager viewPager;
 
     private void getUsername() {
         Bundle bundle = getIntent().getExtras();
@@ -134,13 +141,14 @@ public class MainActivity extends AppCompatActivity {
 
 
     // Komunikacija s strežnikom
-    public String lokacija;
-    public String opis;
-    public String nahajal;
-    public String jeAktivna;
-    public String userAssignedTo;
-    public String userUpdate_date;
-    public String statusUpdate_date;
+    private String lokacija;
+    private String opis;
+    private String nahajal;
+    private String jeAktivna;
+    private String userAssignedTo;
+    private String userUpdate_date;
+    private String statusUpdate_date;
+
 
 
     void PostToServer(String command, String query, String data) {
@@ -167,14 +175,9 @@ public class MainActivity extends AppCompatActivity {
                         userAssignedTo = output.getString("AssignedTo");
                         userUpdate_date = output.getString("userUpdate_date");
                         statusUpdate_date = output.getString("statusUpdate_date");
-                        Geolokacija = output.getString("GEOLokacija").split("-");
-                        // imgURL = output.getString("imgURL");
-                        s1.setOnScreen(2);
-                        getSupportFragmentManager()
-                                .beginTransaction()
-                                .detach(s1)
-                                .attach(new stran1())
-                                .commit();
+                        Geolokacija = output.getString("GEOLokacija").split(" - ");
+                        imgURL = SERVER_IMG_FOLDER + inv_st + IMAGE_FORMAT;
+                        setOnScreen(1);
                     } catch (JSONException e) {
                         e.printStackTrace();
                         opis = "";
@@ -184,21 +187,11 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
                 if (command.equals("setStatus")) {
-                    s1.setOnScreen(2);
-                    getSupportFragmentManager()
-                            .beginTransaction()
-                            .detach(s1)
-                            .attach(new stran1())
-                            .commit();
+                    setOnScreen(2);
 
                 }
                 if (command.equals("setUser")) {
-                    s1.setOnScreen(2);
-                    getSupportFragmentManager()
-                            .beginTransaction()
-                            .detach(s1)
-                            .attach(s1)
-                            .commit();
+                    setOnScreen(2);
                 }
                 if (command.equals("getUserEquip")) {
                     drawTable(output);///povezano s funkcijami v paketu tabela za sremembo je potrebno več stvari
@@ -217,13 +210,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void findEquipment(String barcode, String scanType, String action) {
-        Log.d("FIND_EQUIPMENT;", scanType + barcode + action);
+        Log.d("FIND_EQUIPMENT;", scanType + " | "+ barcode + " | "+ action);
         if (barcode.length() > 2) {
             if (scanType.equals("barcode")) {
                 barcode = barcode.substring(1, barcode.length() - 1);
-                inv_st = barcode;
-            }
 
+            }
+            inv_st = barcode;
         } else {
             Toast.makeText(this, getResources().getString(R.string.badBarcode) + "-" + barcode, Toast.LENGTH_SHORT).show();
         }
@@ -283,7 +276,15 @@ public class MainActivity extends AppCompatActivity {
 
     // Pomožne funkcije
     public String status(String str) {
-        return str.equals("1") ? "DA" : "NE";
+        return str.equals("1") ? getString(R.string.working) : getString(R.string.broken);
+    }
+    public String datediff(Date date, String str) throws ParseException {
+        long time = (date.getTime() - new SimpleDateFormat("yyy-MM-dd HH:mm:ss").parse(str).getTime()) / 1000;
+        int floor = (int) Math.floor((double) (time / 86400));
+        time = (time - ((long) ((floor * 24) * 3600))) / 3600;
+        String stringBuilder = "" +
+                floor;
+        return stringBuilder;
     }
 
     private void writeToFile(String data, String filename) {
@@ -476,6 +477,77 @@ public class MainActivity extends AppCompatActivity {
         PostToServer("getUserEquip", query, null);
     }
 
+    public void setOnScreen(int i) {
+      /*  String userdatediff="", statusdatediff="";
+        try {
+            userdatediff = datediff(new Date(), M_A.userUpdate_date);
+            statusdatediff= datediff(new Date(), M_A.statusUpdate_date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        if (M_A.username.equals(M_A.userAssignedTo)) {
+            assignButton.setEnabled(false);
+            if (M_A.jeAktivna.equals("0")) {
+                pokvarjeno.setEnabled(true);
+                izpravno.setEnabled(false);
+
+            } else  if (M_A.jeAktivna.equals("1")) {
+                pokvarjeno.setEnabled(false);
+                izpravno.setEnabled(true);
+
+            }
+        } else {
+            assignButton.setEnabled(true);
+        }
+
+        Glide
+                .with(this).load(SERVER_IMG_FOLDER+M_A.inv_st + IMAGE_FORMAT)
+                .error(R.drawable.background_logo)
+                .fallback(R.drawable.background_logo)
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, com.bumptech.glide.request.target.Target<Drawable> target, boolean isFirstResource) {
+                        // imageView.setVisibility(View.INVISIBLE);
+                        imageView.setClickable(true);
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, com.bumptech.glide.request.target.Target<Drawable> target, com.bumptech.glide.load.DataSource dataSource, boolean isFirstResource) {
+                        // imageView.setVisibility(View.VISIBLE);
+                        return false;
+                    }
+                })
+                .into(imageView);
+//
+
+        tagIDTextview.setText(M_A.inv_st);
+        opisTextView.setText(M_A.opis);
+        imageView.setVisibility(View.VISIBLE);
+        statusTextView.setText(M_A.status(M_A.jeAktivna)+"-"+statusdatediff+"dni");
+        assignedToTextView.setText(M_A.userAssignedTo + "-"+userdatediff+"dni");
+        tipTextView.setText(M_A.nahajal);
+        GeolokacijaTV.setText(M_A.Geolokacija[0]);*/
+
+
+  //      mViewPager.setCurrentItem(2);
+ //       txtOpis2
+        viewPager.setCurrentItem(2);
+        Stran2 stran2 = (Stran2) sectionsPagerAdapter.getCurrentFragment();
+        stran2.SetOnStran2(opis,username + " - " + userUpdate_date,inv_st, status(jeAktivna) + " - " + statusUpdate_date,nahajal,Geolokacija,imgURL);
+
+
+        if (i == 2) {
+            refreshTable(username);
+        }
+        if (searchView != null && !searchView.isIconified()) {
+            searchView.setIconified(true);
+        }
+    }
+
+
+
     private HorizontalScrollView headerScroll;
     private int scrollX;
     private RowAdapter rowAdapter;
@@ -485,37 +557,41 @@ public class MainActivity extends AppCompatActivity {
         scrollX = 0;
         List<LineItem> rowList = new ArrayList();
         RecyclerView rvRow = findViewById(R.id.RV);
-        headerScroll = findViewById(R.id.horizontalScrollView);
+       // headerScroll = findViewById(R.id.horizontalScrollView);
         rowAdapter = new RowAdapter(this, rowList);
-        FixedGridLayoutManager fixedGridLayoutManager = new FixedGridLayoutManager();
-        fixedGridLayoutManager.setTotalColumnCount(1);
-        rvRow.setLayoutManager(fixedGridLayoutManager);
+       // FixedGridLayoutManager fixedGridLayoutManager = new FixedGridLayoutManager();
+       // fixedGridLayoutManager.setTotalColumnCount(1);
+        rvRow.setLayoutManager(new LinearLayoutManager(this));
         rvRow.setAdapter(rowAdapter);
-        rvRow.addItemDecoration(new DividerItemDecoration(this, 1));
+       // rvRow.addItemDecoration(new DividerItemDecoration(this, 1));
         try {
             JSONArray jSONArray = jSONObject.getJSONArray("podatki");
             while (i < jSONArray.length()) {
                 JSONObject jSONObj = jSONArray.getJSONObject(i);
-                //Log.i("PODATKI-Tabela:", jSONObj.toString());
+
                 String status = status(jSONObj.getString("jeAktivna"));
                 String opis = jSONObj.getString("Naziv_osn_sred");
                 String update_date = jSONObj.getString("userUpdate_date");
                 String inv_st = jSONObj.getString("Inv_št");
-//                if (!isWholeData) {
-//                    StringBuilder stringBuilder2 = new StringBuilder();
-//                    stringBuilder2.append(SERVER_IMG_FOLDER);
-//                    stringBuilder2.append(string3);
-//                    stringBuilder2.append(IMAGE_FORMAT);
-//                    str = stringBuilder2.toString();
-//                }
+
+                Log.i("PODATKI-Tabela:", SERVER_IMG_FOLDER +inv_st + IMAGE_FORMAT);
+/*              Log.i("PODATKI-Tabela:", jSONObj.toString());
+                if (!isWholeData) {
+                    StringBuilder stringBuilder2 = new StringBuilder();
+                    stringBuilder2.append(SERVER_IMG_FOLDER);
+                    stringBuilder2.append(string3);
+                    stringBuilder2.append(IMAGE_FORMAT);
+                    str = stringBuilder2.toString();
+                }
+*/
 
                 i++;
-                rowList.add(new LineItem(i, inv_st, opis, status, s1.datediff(new Date(), update_date)));
+                rowList.add(new LineItem(i, inv_st, opis, status, datediff(new Date(), update_date), SERVER_IMG_FOLDER +inv_st + IMAGE_FORMAT));
             }
         } catch (ParseException | JSONException e) {
             e.printStackTrace();
         }
-        rvRow.addOnScrollListener(new RecyclerView.OnScrollListener() {
+ /*       rvRow.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
@@ -530,7 +606,7 @@ public class MainActivity extends AppCompatActivity {
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
             }
-        });
+        });*/
     }
 
 
@@ -866,10 +942,10 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
 
-                Glide
+                /*Glide
                         .with(this)
                         .load(bitmap)
-                        .into(s1.imageView);
+                        .into(slika2);*/
                 ImageUploadToServerFunction(inv_st + IMAGE_FORMAT, bitmap);
             }
         }
@@ -888,9 +964,6 @@ public class MainActivity extends AppCompatActivity {
             searchView.setIconified(true);
         } else if (inv_st != null) {
             inv_st = null;
-            s1.imageView.setVisibility(View.GONE);
-            findViewById(R.id.tableLayout).setVisibility(View.GONE);
-            findViewById(R.id.button_layout).setVisibility(View.GONE);
         } else if (isWholeData) {
             refreshTable(username);
             isWholeData = false;
@@ -912,24 +985,17 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+/*    private  void SetViewPager(ViewPager viewPager) {
+        SectionsStateFragmentAdapter adapter = new SectionsStateFragmentAdapter(getSupportFragmentManager());
+        adapter.addFragment(new stran1(), "Prva Stran");
+        adapter.addFragment(new stran2(), "Druga Stran");
+        adapter.addFragment(new stran3(), "Tretja Stran");
+        viewPager.setAdapter(adapter);
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    public void SetViewPager(int fragmentNumber){
+        mViewPager.setCurrentItem(fragmentNumber);
+    }*/
 
 
     @Override
@@ -937,15 +1003,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
 
-        si.kostakdd.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
+        ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
-        ViewPager viewPager = binding.viewPager;
+        sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
+        viewPager = binding.viewPager;
         viewPager.setAdapter(sectionsPagerAdapter);
-        TabLayout tabs = binding.tabs;
-        tabs.setupWithViewPager(viewPager);
+        viewPager.setPagingEnabled(false);
+
+    //    TabLayout tabs = binding.tabs;
+     //   tabs.setupWithViewPager(viewPager);
         FloatingActionButton fab = binding.fab;
+
+     //   mSectionFragmentAdapter = new SectionsStateFragmentAdapter(getSupportFragmentManager());
+    //    mViewPager = (ViewPager) findViewById(R.id.view_pager);
 
         getUsername();
         checkLocationPermission();
@@ -955,12 +1026,12 @@ public class MainActivity extends AppCompatActivity {
         initializeNFC();
         setActionBar(); // inicializacija menuja s ikono
         //setButtons();
-        fab.setOnClickListener(new View.OnClickListener() {
+ /*       fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        });
+        });*/
     }
 }

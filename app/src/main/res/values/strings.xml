@@ -17,11 +17,11 @@
     <string name="qrscanner">Čitalnik QR in črtne kode</string>
     <string name="exitApp">Zapri aplikacijo</string>
     <string name="geolocation">Lokacija:</string>
-    <string name="status">Dela?</string>
+    <string name="status">Status: </string>
     <string name="assignedTo">Zadolžen:</string>
     <string name="description">Opis:</string>
     <string name="company_location">Nahajal.:</string>
-    <string name="id_number">Inv. št:</string>
+    <string name="id_number">Inv. št.: </string>
 
     <string name="android_auto_update_dialog_title">Posodobitve aplikacije</string>
 
@@ -37,10 +37,10 @@
 
     <string name="android_auto_update_dialog_checking">Preverjanje</string>
     <string name="logo">slika opreme</string>
-    <string name="ID">Id</string>
-    <string name="days">Št. dni</string>
+    <string name="ID">ID</string>
+    <string name="days">Št. dni v uporabi: </string>
     <string name="action_search">Išči</string>
-    <string name="status_header">Dela?</string>
+    <string name="status_header">Status opreme: </string>
     <string name="imageView_content_description">Slika opreme</string>
     <string name="enableNFC">Omogoči NFC</string>
     <string name="openWeb">Odpri spletno stran</string>
@@ -51,5 +51,11 @@
     <string name="kostak_komunalno_in_gradbeno_podjetje_d_d">Kostak, komunalno in gradbeno podjetje d.d.</string>
     <string name="hello_blank_fragment">Prazen fragment 1</string>
     <string name="tab_text_3">Stran 3</string>
+    <string name="working">Izpravna oprema</string>
+    <string name="broken">Pokvarjena oprema</string>
+    <string name="slika_opreme">Slika opreme</string>
+    <string name="opis_opreme">Oprema:</string>
+    <string name="Oznaka_zadolžen">"Zadolžen: "</string>
+    <string name="nahajalisce">"Nahajališče: "</string>
 
 </resources>
