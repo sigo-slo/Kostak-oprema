@@ -14,7 +14,7 @@ public class Constants {
     public static final int TYPE_DIALOG = 1;
 
     public static final String TAG = "UpdateChecker";
-    public static final String HOST_URL = "https://kostak-test.000webhostapp.com";//"http://192.168.1.19/kostak";//
+    public static final String HOST_URL = "http://kostak-test.000webhostapp.com";//"http://192.168.1.19/kostak";//
     public static final String UPDATE_URL = HOST_URL + "/update/update.json";
     public static final String LOGIN_URL = HOST_URL + "/action.php";
     public static final String SERVER_IMG_FOLDER = HOST_URL+"/img/";

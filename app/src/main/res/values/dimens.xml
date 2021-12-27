@@ -12,5 +12,9 @@
     <dimen name="header_height">40dp</dimen>
     <dimen name="cell_width">50dp</dimen>
     <dimen name="margin">5dp</dimen>
-    <dimen name="RV_top_offset">42dp</dimen><!-- pazi tale se navezuje na header_height + top margin za RecyclerView-->
+    <dimen name="RV_top_offset">42dp</dimen>
+    <dimen name="rounded_corners">25dp
+    </dimen>
+    <dimen name="layoutRadious">25dp
+    </dimen><!-- pazi tale se navezuje na header_height + top margin za RecyclerView-->
 </resources>

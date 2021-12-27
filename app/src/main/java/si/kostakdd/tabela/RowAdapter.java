@@ -9,20 +9,18 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.Group;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.signature.ObjectKey;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import si.kostakdd.MainActivity;
 import si.kostakdd.R;
 
 
@@ -35,41 +33,55 @@ public class RowAdapter extends RecyclerView.Adapter<RowAdapter.RowViewHolder> i
     private final List<LineItem> rowList;
 
     public class RowViewHolder extends ViewHolder {
-        public ImageView imgPic;
+        public ImageView imageInfo;
+        public ImageView imageLoc;
+        public ImageView imagePic;
+        public ImageView imageEdit;
+        public ImageView imageArrow;
         public TextView row_num;
         public TextView txtinv_st;
         public TextView txtopis;
         public TextView txtstatus;
-        public TextView txtv_uporabi;
         public CardView row;
+        public Group expandeditems;
 
         public RowViewHolder(View view) {
             super(view);
-            row = view.findViewById(R.id.ll);
+            row = view.findViewById(R.id.kartica);
             row_num = view.findViewById(R.id.txtrow);
-            txtinv_st = view.findViewById(R.id.txtInv_st);
             txtopis = view.findViewById(R.id.txtOpis);
-            txtstatus = view.findViewById(R.id.txtStatus);
-            txtv_uporabi = view.findViewById(R.id.txtdays);
-            imgPic = view.findViewById(R.id.slika2);
-            row.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    if(hasFocus) {
-                       // Toast.makeText(context,"klik",Toast.LENGTH_SHORT).show();
+          //  txtstatus = view.findViewById(R.id.txtStatus);
+           // txtv_uporabi = view.findViewById(R.id.txtdays);
+            imagePic = view.findViewById(R.id.imagePic);
+            imageInfo = view.findViewById(R.id.imageInfo);
+            imageEdit = view.findViewById(R.id.imageEdit);
+            imageLoc = view.findViewById(R.id.imageLoc);
+            imageArrow = view.findViewById(R.id.kartica_expand);
+            expandeditems=view.findViewById(R.id.expandedItems);
 
-                        //row.clearFocus();
-                    }
+            imageArrow.setOnClickListener(new View.OnClickListener() {
+                                             @Override
+                                             public void onClick(View v) {
+                                                    if (expandeditems.getVisibility()==View.GONE){
+                                                        expandeditems.setVisibility(View.VISIBLE);
+                                                        imageArrow.setImageResource(R.drawable.ic_baseline_arrow_drop_up_24);
+                                                    } else {
+                                                        expandeditems.setVisibility(View.GONE);
+                                                        imageArrow.setImageResource(R.drawable.ic_arrow_drop_down);
+                                                    }
 
-                }
-            });
-            row.setOnClickListener(new View.OnClickListener() {
+                                               //  Toast.makeText(context,"klik INFO",Toast.LENGTH_SHORT).show();
+                                                 //((MainActivity)context).findEquipment(txtinv_st.getText().toString(), "NFC","klik na tabelo");
+                                             }
+                                         }
+
+            );
+
+            imageInfo.setOnClickListener(new View.OnClickListener() {
                                    @Override
                                    public void onClick(View v) {
-                                    //   if (row.hasFocus()){
-                                    //       row.clearFocus();
-                                   //    }
-                                    ((MainActivity)context).findEquipment(txtinv_st.getText().toString(), "NFC","klik na tabelo");
+                                       Toast.makeText(context,"klik INFO",Toast.LENGTH_SHORT).show();
+                                    //((MainActivity)context).findEquipment(txtinv_st.getText().toString(), "NFC","klik na tabelo");
                                    }
                                }
 
@@ -105,34 +117,22 @@ public class RowAdapter extends RecyclerView.Adapter<RowAdapter.RowViewHolder> i
             return new RowViewHolder(view);
         } else
         {
-            View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.row_color, viewGroup, false);
+          View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_layout, viewGroup, false);
             return new RowViewHolder(view);
         }
     }
 
     public void onBindViewHolder(RowViewHolder holder, int position) {
         LineItem lineItem = filteredRowList.get(position);
+
         holder.row_num.setText(lineItem.row_num);
-        holder.txtinv_st.setText(lineItem.inv_st);
-        holder.txtopis.setText(lineItem.opis);
-        holder.txtstatus.setText(lineItem.status);
-        if (lineItem.status.equals(context.getResources().getString(R.string.working))){
-            holder.txtstatus.setTextColor(context.getResources().getColor(R.color.blue));
-        }
-        else{
-            holder.txtstatus.setTextColor(context.getResources().getColor(R.color.red));
-        }
-        holder.txtv_uporabi.setText(lineItem.v_uporabi);
+
+       holder.txtopis.setText(lineItem.opis + " (" +lineItem.inv_st+ ")");
+     }
 
 
-        Glide.with(context)
-                .load(lineItem.picUrl)
-                .error(R.drawable.background_logo)
-                .fallback(R.drawable.background_logo)
-                .signature(new ObjectKey(String.valueOf(System.currentTimeMillis())))
-                .into(holder.imgPic);
-    }
-    @Override
+
+        @Override
     public int getItemCount() {
         return filteredRowList.size();
     }

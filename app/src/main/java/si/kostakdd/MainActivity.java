@@ -14,7 +14,6 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.app.PendingIntent;
 import android.app.SearchManager;
 import android.content.Context;
@@ -24,6 +23,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -44,9 +44,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.HorizontalScrollView;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,7 +58,6 @@ import androidx.core.content.FileProvider;
 import androidx.exifinterface.media.ExifInterface;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -69,10 +66,6 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.SettingsClient;
-import com.google.android.gms.maps.MapView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.tabs.TabLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -99,43 +92,29 @@ import si.kostakdd.parser.NdefMessageParser;
 import si.kostakdd.record.ParsedNdefRecord;
 import si.kostakdd.tabela.LineItem;
 import si.kostakdd.tabela.RowAdapter;
-import si.kostakdd.ui.SectionsStateFragmentAdapter;
 import si.kostakdd.ui.main.CustomViewPager;
-import si.kostakdd.ui.main.SectionsPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
-    //private stran1 s1 = new stran1();
-    public String inv_st;
-    public String username,imgURL;
-    SectionsPagerAdapter sectionsPagerAdapter;
+    public String inv_st,username;
+    private String imgURL;
+    //SectionsPagerAdapter sectionsPagerAdapter;
 
     private CustomViewPager viewPager;
 
     private void getUsername() {
         Bundle bundle = getIntent().getExtras();
+        TextView tv = findViewById(R.id.TV_username);
         if (username == null && bundle != null) {
             username = bundle.getString("username");
             //   username = readFromFile("USERID.TXT");
+            tv.setText(username);
             Log.d("GET_USERNAME;", username);
             // TODO
             refreshTable(username);//to je samo za iskanje vse opreme za trenutnega uporabnika v bazi
         }
 
     }
-
-    private void setActionBar() {
-
-        ActionBar supportActionBar = getSupportActionBar();
-        if (supportActionBar != null) {
-            supportActionBar.setDisplayShowTitleEnabled(true);
-            supportActionBar.setTitle(Html.fromHtml("<small><font color=\"#680cee\">" + username + "</small>"));
-            supportActionBar.setHomeAsUpIndicator(R.drawable.actionbar_icon);
-            supportActionBar.setDisplayHomeAsUpEnabled(true);
-
-        }
-    }
-
     private FusedLocationProviderClient mFusedLocationClient;
     private LocationCallback mLocationCallback;
 
@@ -533,9 +512,9 @@ public class MainActivity extends AppCompatActivity {
 
   //      mViewPager.setCurrentItem(2);
  //       txtOpis2
-        viewPager.setCurrentItem(2);
-        Stran2 stran2 = (Stran2) sectionsPagerAdapter.getCurrentFragment();
-        stran2.SetOnStran2(opis,username + " - " + userUpdate_date,inv_st, status(jeAktivna) + " - " + statusUpdate_date,nahajal,Geolokacija,imgURL);
+     //   viewPager.setCurrentItem(2);
+   //    Stran2 stran2 = (Stran2) sectionsPagerAdapter.getCurrentFragment();
+     //   stran2.SetOnStran2(opis,username + " - " + userUpdate_date,inv_st, status(jeAktivna) + " - " + statusUpdate_date,nahajal,Geolokacija,imgURL);
 
 
         if (i == 2) {
@@ -586,9 +565,9 @@ public class MainActivity extends AppCompatActivity {
 */
 
                 i++;
-                rowList.add(new LineItem(i, inv_st, opis, status, datediff(new Date(), update_date), SERVER_IMG_FOLDER +inv_st + IMAGE_FORMAT));
+                rowList.add(new LineItem(i, inv_st, opis)); //, status, datediff(new Date(), update_date), SERVER_IMG_FOLDER +inv_st + IMAGE_FORMAT));
             }
-        } catch (ParseException | JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
  /*       rvRow.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -868,7 +847,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         checkLocationPermission();
         // nfcAdapter = NfcAdapter.getDefaultAdapter(this);
-        getSupportActionBar().setSubtitle(Html.fromHtml("<font color=\"#FF0000\">QR čitalnik</font>"));
+      //  getSupportActionBar().setSubtitle(Html.fromHtml("<font color=\"#FF0000\">QR čitalnik</font>"));
 
         if (nfcAdapter != null) {// Če aplikacija zazna NFC opremo
             if (!nfcAdapter.isEnabled()) { // in če ni omogočena
@@ -878,7 +857,7 @@ public class MainActivity extends AppCompatActivity {
 
             } else {
                 nfcAdapter.enableForegroundDispatch(this, pendingIntent, null, null);
-                getSupportActionBar().setSubtitle(Html.fromHtml("<font color=\"#FF0000\">NFC ali QR čitalnik</font>"));
+         //       getSupportActionBar().setSubtitle(Html.fromHtml("<font color=\"#FF0000\">NFC ali QR čitalnik</font>"));
 
 
             }
@@ -1001,30 +980,29 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
+        getUsername();
+  /*      sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
         viewPager = binding.viewPager;
         viewPager.setAdapter(sectionsPagerAdapter);
         viewPager.setPagingEnabled(false);
-
+*/
     //    TabLayout tabs = binding.tabs;
      //   tabs.setupWithViewPager(viewPager);
-        FloatingActionButton fab = binding.fab;
+        //FloatingActionButton fab = binding.fab;
 
      //   mSectionFragmentAdapter = new SectionsStateFragmentAdapter(getSupportFragmentManager());
     //    mViewPager = (ViewPager) findViewById(R.id.view_pager);
 
-        getUsername();
+
         checkLocationPermission();
         geocoder = new Geocoder(this, Locale.getDefault());
         startLocationUpdates();
         //initializeVars(); // inicializacija spremenljivk, NFC
         initializeNFC();
-        setActionBar(); // inicializacija menuja s ikono
+       // setActionBar(); // inicializacija menuja s ikono
         //setButtons();
  /*       fab.setOnClickListener(new View.OnClickListener() {
             @Override

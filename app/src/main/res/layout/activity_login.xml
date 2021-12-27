@@ -1,87 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/background_logo">
+    android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/ET_username"
-        style="@style/Widget.AppCompat.Light.AutoCompleteTextView"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/appbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/body_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/TV_username"
+            style="@style/TextAppearance.AppCompat.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:drawableStart="@drawable/ic_username"
+            android:drawablePadding="15dp"
+            android:elegantTextHeight="true"
+            android:hint="@string/user"
+            android:inputType="textPersonName"
+            android:text="@string/user"
+            android:textAlignment="viewStart"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="@+id/barImageView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/barImageView" />
+
+        <ImageView
+            android:id="@+id/barImageView"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/k_logo" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/body_layout"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="60dp"
-        android:autofillHints=""
-        android:background="#11435AA0"
+        android:layout_height="0dp"
+        android:layout_marginTop="120dp"
+        android:background="@drawable/round_corners"
 
-        android:ems="10"
-        android:hint="@string/user"
-        android:inputType="textPersonName"
-        android:padding="10dp"
-        android:singleLine="true"
-        android:textAlignment="center"
-        android:textColor="#3949AB"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/LogoView"
-        android:gravity="center_horizontal" />
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/appbar_layout"
+        app:layout_constraintStart_toStartOf="@+id/appbar_layout"
+        app:layout_constraintTop_toTopOf="@+id/appbar_layout">
 
-    <EditText
-        android:id="@+id/ET_password"
-        style="@style/Widget.AppCompat.Light.AutoCompleteTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="60dp"
-        android:autofillHints=""
-        android:background="#11435AA0"
-        android:ems="10"
+        <com.chaos.view.PinView
+            android:id="@+id/ET_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:background="@color/body_background_color"
+            android:clickable="true"
 
-        android:hint="@string/password"
-        android:inputType="numberPassword"
-        android:padding="10dp"
-        android:singleLine="true"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ET_username"
-        android:gravity="center_horizontal" />
+            android:cursorVisible="true"
+            android:drawableStart="@drawable/ic_lock_24"
 
-    <ImageView
-        android:id="@+id/LogoView"
-        android:layout_width="0dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="100dp"
-        android:contentDescription="@string/kostak_komunalno_in_gradbeno_podjetje_d_d"
-        android:src="@drawable/kostak_logo_mali"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/loginButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@android:color/transparent"
-        android:text="@string/login_button_text"
-        android:textAlignment="center"
-        android:textColor="#3949AB"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ET_password"
-        android:gravity="center_horizontal">
+            android:drawingCacheQuality="auto"
+            android:duplicateParentState="true"
+            android:focusable="auto"
+            android:focusableInTouchMode="true"
+            android:gravity="center_horizontal"
+            android:inputType="numberPassword"
+            android:linksClickable="false"
+            android:minWidth="30dp"
+            android:textColor="@color/blue"
+            android:textSize="16sp"
+            app:cursorColor="@color/black"
+            app:hideLineWhenFilled="true"
+            app:itemRadius="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView3"
+            app:lineColor="@color/blue" />
 
-    </Button>
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="64dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_lock_24" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="25dp"
+            app:cardElevation="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="220dp"
+                app:srcCompat="@drawable/uprava" />
+
+
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,11 +9,12 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.chaos.view.PinView;
 
 import org.json.JSONException;
 
@@ -86,10 +87,11 @@ public class LoginActivity extends AppCompatActivity {
     String message="Nekaj je šlo narobe...Preverite povezavo in ponovno poskusite";
     int success = 0;
     Intent myIntent;
-    private void login(View view, String username, String password)
+    private void login(View view, String username, PinView password)
     {
         closeKeyboard(view);
-        String query = username +","+ password;
+        String query = username +","+ password.getText().toString();
+
         new PostAsync(this, "Povezovanje...", output -> {
             if (output!=null){
                 try {
@@ -104,10 +106,15 @@ public class LoginActivity extends AppCompatActivity {
             if (success==1){
                 myIntent = new Intent(LoginActivity.this,MainActivity.class);
                 myIntent.putExtra("username", username); //Optional parameters
+
                 startActivity(myIntent);
                 writeToFile(username, "USERID.TXT");
+                closeKeyboard(view);
                 finish();
+            }else{
+
             }
+
         }).execute(Constants.LOGIN_URL, "login", query);
 
     }
@@ -133,11 +140,11 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         username = readFromFile("USERID.TXT");
-        EditText ET_username = findViewById(R.id.ET_username);
-        EditText ET_password = findViewById(R.id.ET_password);
+        EditText ET_username = findViewById(R.id.TV_username);
+        PinView ET_password = findViewById(R.id.ET_password);
         ET_username.setText(username);
         //getSupportActionBar().hide();
-        Button loginButton = findViewById(R.id.loginButton);
+       /* Button loginButton = findViewById(R.id.loginButton);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -155,17 +162,20 @@ public class LoginActivity extends AppCompatActivity {
 
             }
 
-        });
+        });*/
 
        ET_password.setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 // If the event is a key-down event on the "enter" button
-                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
-                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                if ((event.getAction() == KeyEvent.ACTION_DOWN  &&
+                        keyCode == KeyEvent.KEYCODE_ENTER) || ET_password.getText().toString().length()==4) {
                     // Perform action on key press
-                    login(v, ET_username.getText().toString(),ET_password.getText().toString());
+                    login(v, ET_username.getText().toString(),ET_password);
+                    ET_password.setText("");
+                    closeKeyboard(v);
                     return true;
                 }
+                //Toast.makeText(v.getContext(), ET_username.getText().length(), Toast.LENGTH_SHORT).show();
                 return false;
             }
         });

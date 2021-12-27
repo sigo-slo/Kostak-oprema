@@ -26,6 +26,8 @@
     <color name="pressed_row_color">#72F44336</color>
     <color name="default_row_color">#FFFFFF</color>
     <color name="red">#FF0000</color>
-    <color name="blue">#0066FF</color>
+    <color name="blue">#1B5E9D</color>
+    <color name="cardview_light">#CEFFFFFF</color>
+    <color name="body_background_color">#85FFFFFF</color>
 
 </resources>
