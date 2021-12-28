@@ -1,61 +1,35 @@
 <resources>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
     <string name="app_name">Kostak d.d.</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="user">UPORABNIK</string>
-    <string name="password">PIN</string>
-    <string name="login_button_text">Vpis v aplikacijo</string>
-    <string name="stateBrokenTxt">Pokvarjeno</string>
 
     <string name="title_location_permission">Potrebna so dovoljenja</string>
     <string name="text_location_permission">Za pravilno delovanje te aplikacije je potrebno omogočiti lokacijo!</string>
     <string name="allow">V redu</string>
-    <string name="stateWorking">Izpravno</string>
-    <string name="prevButtontext">Prevzemi</string>
-    <string name="searchButton">Poišči v bazi</string>
     <string name="qrscanner">Čitalnik QR in črtne kode</string>
     <string name="exitApp">Zapri aplikacijo</string>
-    <string name="geolocation">Lokacija:</string>
-    <string name="status">Status: </string>
-    <string name="assignedTo">Zadolžen:</string>
-    <string name="description">Opis:</string>
-    <string name="company_location">Nahajal.:</string>
-    <string name="id_number">Inv. št.: </string>
 
     <string name="android_auto_update_dialog_title">Posodobitve aplikacije</string>
 
     <string name="android_auto_update_notify_ticker">TICKER</string>
-    <string name="android_auto_update_notify_content">Obvestilo</string>
 
     <string name="android_auto_update_dialog_btn_download">Posodobi</string>
     <string name="android_auto_update_dialog_btn_cancel">Prekliči</string>
 
-    <string name="android_auto_update_toast_no_new_update">Ni novih posodobitev</string>
-
     <string name="android_auto_update_download_progress">Prenešeno:%1$d%%</string>
 
-    <string name="android_auto_update_dialog_checking">Preverjanje</string>
-    <string name="logo">slika opreme</string>
-    <string name="ID">ID</string>
-    <string name="days">Št. dni v uporabi: </string>
     <string name="action_search">Išči</string>
-    <string name="status_header">Status opreme: </string>
-    <string name="imageView_content_description">Slika opreme</string>
     <string name="enableNFC">Omogoči NFC</string>
-    <string name="openWeb">Odpri spletno stran</string>
     <string name="searchInDatabase">Poišči v bazi</string>
     <string name="getDatabase">Posodobi bazo opreme</string>
     <string name="database">Baza opreme</string>
     <string name="badBarcode">Neustrezno formirana koda!</string>
-    <string name="kostak_komunalno_in_gradbeno_podjetje_d_d">Kostak, komunalno in gradbeno podjetje d.d.</string>
-    <string name="hello_blank_fragment">Prazen fragment 1</string>
-    <string name="tab_text_3">Stran 3</string>
     <string name="working">Izpravna oprema</string>
     <string name="broken">Pokvarjena oprema</string>
-    <string name="slika_opreme">Slika opreme</string>
-    <string name="opis_opreme">Oprema:</string>
-    <string name="Oznaka_zadolžen">"Zadolžen: "</string>
-    <string name="nahajalisce">"Nahajališče: "</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="update_denied">Če zavrnete posodobitve, je lahko pričakovati nepravilno delovanje aplikacije, zato aplikacijo posodobite čimprej! \n\n Posvetujte se s skladiščnikom.</string>
 
 </resources>

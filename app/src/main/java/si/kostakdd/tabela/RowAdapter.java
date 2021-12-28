@@ -16,11 +16,17 @@ import androidx.constraintlayout.widget.Group;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import si.kostakdd.Constants;
+import si.kostakdd.MainActivity;
 import si.kostakdd.R;
 
 
@@ -58,16 +64,15 @@ public class RowAdapter extends RecyclerView.Adapter<RowAdapter.RowViewHolder> i
             imageLoc = view.findViewById(R.id.imageLoc);
             imageArrow = view.findViewById(R.id.kartica_expand);
             expandeditems=view.findViewById(R.id.expandedItems);
-
-            imageArrow.setOnClickListener(new View.OnClickListener() {
+            row.setOnClickListener(new View.OnClickListener() {
                                              @Override
                                              public void onClick(View v) {
                                                     if (expandeditems.getVisibility()==View.GONE){
                                                         expandeditems.setVisibility(View.VISIBLE);
-                                                        imageArrow.setImageResource(R.drawable.ic_baseline_arrow_drop_up_24);
+                                                        imageArrow.setImageResource(R.drawable.card_arrow_up);
                                                     } else {
                                                         expandeditems.setVisibility(View.GONE);
-                                                        imageArrow.setImageResource(R.drawable.ic_arrow_drop_down);
+                                                        imageArrow.setImageResource(R.drawable.card_arrow_down);
                                                     }
 
                                                //  Toast.makeText(context,"klik INFO",Toast.LENGTH_SHORT).show();
@@ -86,6 +91,21 @@ public class RowAdapter extends RecyclerView.Adapter<RowAdapter.RowViewHolder> i
                                }
 
         );
+            imagePic.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((MainActivity)context).openFragment(Constants.FRAGMENT_IMAGE,imagePic.getContentDescription().toString());
+                }
+            }
+            );
+
+            imageLoc.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((MainActivity)context).openFragment(Constants.FRAGMENT_MAP,imagePic.getContentDescription().toString());
+                }
+            }
+            );
 
         }
 
@@ -123,11 +143,16 @@ public class RowAdapter extends RecyclerView.Adapter<RowAdapter.RowViewHolder> i
     }
 
     public void onBindViewHolder(RowViewHolder holder, int position) {
+
         LineItem lineItem = filteredRowList.get(position);
 
         holder.row_num.setText(lineItem.row_num);
+        holder.txtopis.setText(lineItem.opis);
+        holder.imagePic.setContentDescription(lineItem.Json.toString());
 
-       holder.txtopis.setText(lineItem.opis + " (" +lineItem.inv_st+ ")");
+
+
+       //holder.imageLoc.setContentDescription(lineItem.geoCoord);
      }
 
 
@@ -144,7 +169,7 @@ public class RowAdapter extends RecyclerView.Adapter<RowAdapter.RowViewHolder> i
             protected FilterResults performFiltering(CharSequence charSequence)
             {
                 String charString = charSequence.toString();
-                if (charString.isEmpty())
+                if (charString.isEmpty() || charString.length()<3)
                 {
                    filteredRowList = rowList;
                 } else {
@@ -153,22 +178,26 @@ public class RowAdapter extends RecyclerView.Adapter<RowAdapter.RowViewHolder> i
                     for (LineItem lineItem : rowList) {
                         for (Field classVariable : lineItem.getClass().getDeclaredFields()) {
 
-                          //  System.out.println("Fields: " + Modifier.toString(classVariable.getModifiers())); // modyfiers
-                           String test = classVariable.getName();
-                            Log.d("Fields: " , test);        //real var name
-                            classVariable.setAccessible(true);                                //var readable
-                            String strValue = "";
-                            try {
-                                strValue= (String) classVariable.get(lineItem);
-                            } catch (IllegalAccessException e) {
-                                e.printStackTrace();
-                            }
+                           //System.out.println("Fields: " + Modifier.toString(classVariable.getModifiers())); // modyfiers
+                            String test = classVariable.getName();
+                            //Log.d("Fields" , test);        //real var name
+                            if(test=="opis" ) {
+                                classVariable.setAccessible(true);                                //var readable
 
-                            assert strValue != null;
-                            if (strValue.toLowerCase().contains(charString.toLowerCase())) {
-                                filteredList.add(lineItem);
-                                break;
 
+                                String strValue = "";
+                                try {
+                                    strValue = (String) classVariable.get(lineItem);
+                                } catch (IllegalAccessException e) {
+                                    e.printStackTrace();
+                                }
+
+                                assert strValue != null;
+                                if (strValue.toLowerCase().contains(charString.toLowerCase())) {
+                                    filteredList.add(lineItem);
+                                    break;
+
+                                }
                             }
                         }
                     }

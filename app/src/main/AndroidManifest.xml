@@ -50,10 +50,41 @@
             <intent-filter>
                 <action android:name="android.media.action.IMAGE_CAPTURE" />
             </intent-filter>-->
-
+            <intent-filter>
+                <action android:name="android.media.action.IMAGE_CAPTURE" />
+            </intent-filter>
         </activity>
         <meta-data android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyC1VJgMEBl8_HHXrZmIAQx52d7fRDyuXCc"/>
+
+        <activity
+            android:label="@string/app_name"
+            android:name=".ScanCodeActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <service
+            android:name=".update.DownloadService"
+            android:exported="false" />
+        <provider
+            android:name=".update.UpdateApkFileProvider"
+            android:authorities="${applicationId}.update.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/update_apk_paths" />
+        </provider>
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.android.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths">
+            </meta-data>
+        </provider>
+
     </application>
 
 </manifest>

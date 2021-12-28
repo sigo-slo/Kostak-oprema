@@ -38,7 +38,7 @@ class CheckUpdateTask extends AsyncTask<Void, Void, String> {
         if (mShowProgressDialog) {
             dialog = new ProgressDialog(mContext);
             dialog.setMessage(mContext.getString(R.string.android_auto_update_dialog_title));
-            dialog.show();
+           // dialog.show();
         }
     }
 

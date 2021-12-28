@@ -33,7 +33,7 @@ public class DownloadService extends IntentService {
         InputStream in = null;
         FileOutputStream out = null;
         //Toast.makeText(getBaseContext(),urlStr+ "ZNOVA",Toast.LENGTH_LONG).show();
-       // Log.d(TAG, urlStr );
+        Log.d(TAG, urlStr );
         try {
             URL url = new URL(urlStr);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();

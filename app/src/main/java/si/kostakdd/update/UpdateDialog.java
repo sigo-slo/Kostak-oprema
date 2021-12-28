@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 
 import si.kostakdd.Constants;
+import si.kostakdd.LoginActivity;
 import si.kostakdd.R;
 
 
@@ -25,7 +26,22 @@ class UpdateDialog {
                     })
                     .setNegativeButton(R.string.android_auto_update_dialog_btn_cancel, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            ((Activity) context).finish();
+                            //((Activity) context).finish();
+                            new AlertDialog.Builder(context)
+                                    .setTitle(R.string.android_auto_update_dialog_title)
+                                    .setMessage(R.string.update_denied)
+                                    .setPositiveButton(R.string.android_auto_update_dialog_btn_download, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            goToDownload(context, downloadUrl);
+
+                                        }
+                                    })
+                                    .setNegativeButton("Razumem, zapri", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            ((LoginActivity) context).update_app=false;
+                                        }
+                                    })
+                             .show();
                         }
                     })
                     .setCancelable(false)

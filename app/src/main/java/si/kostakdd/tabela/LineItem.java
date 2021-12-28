@@ -1,15 +1,21 @@
 package si.kostakdd.tabela;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class LineItem {
-    public String inv_st;
-    public String opis;
-    public String row_num;
+    public String inv_st,opis,geoLokacija,geoCoord,row_num;
 
+    public JSONObject Json;
 
-    public LineItem(int i, String inv_st, String opis) {
+    public LineItem(int i, String JSONstring) throws JSONException {
 
-        this.row_num = i+ ".";
-        this.inv_st = inv_st;
-        this.opis = opis;
+        this.Json = new JSONObject(JSONstring);
+        this.inv_st = this.Json.getString("Inv_št");
+        this.row_num = i + ".";
+        this.opis = this.Json.getString("Naziv_osn_sred") + " (" +  this.inv_st + ")";
+        this.geoCoord = this. Json.getString("GEOCoord");
+        this.geoLokacija = this.Json.getString("GEOLokacija");
 
     }
 }

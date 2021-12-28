@@ -31,11 +31,11 @@ public class PostAsync extends AsyncTask<String, String, JSONObject> {
 
     @Override
     protected void onPreExecute() {
-       pDialog = new ProgressDialog(context);
+       /*pDialog = new ProgressDialog(context);
         pDialog.setMessage(connectMessage);
         pDialog.setIndeterminate(false);
         pDialog.setCancelable(false);
-        //pDialog.show();
+        //pDialog.show();*/
     }
     @Override
     protected JSONObject doInBackground(String... args) {
@@ -72,10 +72,10 @@ public class PostAsync extends AsyncTask<String, String, JSONObject> {
 
     protected void onPostExecute(JSONObject json) {
 
-        if (pDialog != null && pDialog.isShowing()) {
+       /* if (pDialog != null && pDialog.isShowing()) {
             pDialog.dismiss();
 
-        }
+        }*/
         delegate.processFinish(json);
     }
 

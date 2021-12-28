@@ -17,6 +17,42 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <ImageView
+            android:id="@+id/iv_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/round_corners"
+            android:padding="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/TV_username"
+            app:srcCompat="@drawable/search_phone" />
+
+        <ImageView
+            android:id="@+id/iv_search_global"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/round_corners"
+            android:padding="8dp"
+            app:layout_constraintStart_toEndOf="@+id/iv_search"
+            app:layout_constraintTop_toBottomOf="@+id/TV_username"
+            app:srcCompat="@drawable/global_search" />
+
+        <ImageView
+            android:id="@+id/iv_scan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/round_corners"
+            android:padding="8dp"
+            app:layout_constraintStart_toEndOf="@+id/iv_search_global"
+            app:layout_constraintTop_toBottomOf="@+id/TV_username"
+            app:srcCompat="@drawable/ic_scan" />
+
         <TextView
             android:id="@+id/TV_username"
             android:layout_width="wrap_content"
@@ -26,54 +62,65 @@
 
             android:elegantTextHeight="true"
             android:hint="@string/user"
-            android:minHeight="48dp"
             android:text="@string/user"
             android:textAlignment="viewStart"
-            android:textSize="24sp"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:drawableStartCompat="@drawable/ic_username"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/barImageView"
-            app:drawableStartCompat="@drawable/ic_username" />
+            app:layout_constraintTop_toTopOf="@+id/barImageView" />
 
         <ImageView
             android:id="@+id/barImageView"
-            android:layout_width="85dp"
+            android:layout_width="70dp"
             android:layout_height="85dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/k_logo" />
 
 
+        <SearchView
+            android:id="@+id/search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/round_corners"
+            android:iconifiedByDefault="true"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_search_global"
+            tools:visibility="gone" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/RV"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="120dp"
-            android:background="@drawable/round_corners"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/round_corners_top"
             android:paddingTop="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/search" />
 
-
-
-
-
-
-      <!--  <si.kostakdd.ui.main.CustomViewPager
-            android:id="@+id/view_pager"
+        <FrameLayout
+            android:id="@+id/fragment_viewer"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="120dp"
-            android:background="@drawable/round_corners"
-            android:clipChildren="false"
-            android:clipToPadding="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />-->
+            app:layout_constraintTop_toTopOf="parent">
+
+        </FrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

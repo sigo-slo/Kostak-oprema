@@ -131,15 +131,17 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private String username, password;
-    // private boolean userLoggedIn;
-
+    public boolean update_app = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        username = readFromFile("USERID.TXT");
+        if(isOnline(this) && update_app){
+            UpdateChecker.checkForDialog(this);
+        }
+
+        String username = readFromFile("USERID.TXT");
         EditText ET_username = findViewById(R.id.TV_username);
         PinView ET_password = findViewById(R.id.ET_password);
         ET_username.setText(username);
@@ -180,9 +182,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        if(isOnline(this)){
-            UpdateChecker.checkForDialog(this);
-        }
+
 
 
     }

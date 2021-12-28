@@ -28,7 +28,8 @@ public class Constants {
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     public static final int REQUEST_CODE_TAKEPICTURE = 11;
     public static final int REQUEST_CODE_SCAN_QR = 22;
-    
-    
-    
+
+
+    public static final int FRAGMENT_IMAGE = 0;
+    public static final int FRAGMENT_MAP = 1;
 }
