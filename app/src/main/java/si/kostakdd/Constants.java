@@ -14,7 +14,8 @@ public class Constants {
     public static final int TYPE_DIALOG = 1;
 
     public static final String TAG = "UpdateChecker";
-    public static final String HOST_URL = "http://kostak-test.000webhostapp.com";//"http://192.168.1.19/kostak";//
+    //public static final String HOST_URL = "http://kostak-test.000webhostapp.com";
+   public static final String HOST_URL = "http://192.168.64.105/kostak";
     public static final String UPDATE_URL = HOST_URL + "/update/update.json";
     public static final String LOGIN_URL = HOST_URL + "/action.php";
     public static final String SERVER_IMG_FOLDER = HOST_URL+"/img/";
@@ -26,6 +27,7 @@ public class Constants {
     public static final int BITMAP_NO_COMPRESSION = 100;
 
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+    public static final int MY_PERMISSIONS_REQUEST_NFC = 88;
     public static final int REQUEST_CODE_TAKEPICTURE = 11;
     public static final int REQUEST_CODE_SCAN_QR = 22;
 

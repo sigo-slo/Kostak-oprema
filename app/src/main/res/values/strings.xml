@@ -6,8 +6,6 @@
     <string name="title_location_permission">Potrebna so dovoljenja</string>
     <string name="text_location_permission">Za pravilno delovanje te aplikacije je potrebno omogočiti lokacijo!</string>
     <string name="allow">V redu</string>
-    <string name="qrscanner">Čitalnik QR in črtne kode</string>
-    <string name="exitApp">Zapri aplikacijo</string>
 
     <string name="android_auto_update_dialog_title">Posodobitve aplikacije</string>
 
@@ -18,18 +16,17 @@
 
     <string name="android_auto_update_download_progress">Prenešeno:%1$d%%</string>
 
-    <string name="action_search">Išči</string>
-    <string name="enableNFC">Omogoči NFC</string>
-    <string name="searchInDatabase">Poišči v bazi</string>
-    <string name="getDatabase">Posodobi bazo opreme</string>
-    <string name="database">Baza opreme</string>
     <string name="badBarcode">Neustrezno formirana koda!</string>
     <string name="working">Izpravna oprema</string>
     <string name="broken">Pokvarjena oprema</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="update_denied">Če zavrnete posodobitve, je lahko pričakovati nepravilno delovanje aplikacije, zato aplikacijo posodobite čimprej! \n\n Posvetujte se s skladiščnikom.</string>
+    <string name="id_number">Inventrana številka</string>
+    <string name="naziv_osn_sredstva">Naziv osnovnega sredstva - opis</string>
+    <string name="assignedTo">Zadolžen za opremo</string>
+    <string name="location">Prevzeto na naslovu:</string>
+    <string name="status_opreme">Status opreme</string>
+    <string name="last_users">Zadnji uporabniki</string>
+    <string name="change_state">SPREMENI STANJE OPREME</string>
 
 </resources>

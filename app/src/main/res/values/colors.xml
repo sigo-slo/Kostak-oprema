@@ -9,15 +9,11 @@
     <color name="blue">#214e88</color>
     <!-- Kostak zelena 50% tranparentna<color name="body_background_color">#508dc63f</color>-->
     <color name="body_background_color">#50FFFFFF</color>
-    <color name="light_blue_600">#FF039BE5</color>
-    <color name="light_blue_900">#FF01579B</color>
-    <color name="light_blue_A200">#FF40C4FF</color>
-    <color name="light_blue_A400">#FF00B0FF</color>
     <color name="transparent">#00FFFFFF</color>
 
-    <color name="black_overlay">#66000000</color>
     <color name="kostak_green">#8dc63f</color>
     <color name="cardview_start_color">#708dc63f</color>
-    <color name="cardview_center_color">@color/transparent</color>
+    <color name="cardview_center_color">@color/white</color>
     <color name="cardview_end_color">#708dc63f</color>
+    <color name="red">#FF0701</color>
 </resources>

@@ -14,9 +14,16 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.chaos.view.PinView;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -24,8 +31,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.HashMap;
+import java.util.Map;
 
-import si.kostakdd.connect.PostAsync;
+import si.kostakdd.connect.VolleyCallback;
 import si.kostakdd.update.UpdateChecker;
 
 
@@ -84,38 +93,43 @@ public class LoginActivity extends AppCompatActivity {
         return ret;
     }
 
-    String message="Nekaj je šlo narobe...Preverite povezavo in ponovno poskusite";
-    int success = 0;
-    Intent myIntent;
+
+
+
     private void login(View view, String username, PinView password)
     {
         closeKeyboard(view);
-        String query = username +","+ password.getText().toString();
-
-        new PostAsync(this, "Povezovanje...", output -> {
-            if (output!=null){
+        String query = username +","+password.getText().toString();
+        getString(new VolleyCallback() {
+            @Override
+            public void onSuccess(String result) {
+                    Log.d("login",result);
+                String message;
+                int success ;
+                Intent myIntent;
+                int isAdmin;
                 try {
-                    message = output.getString("message");
-                    success = output.getInt("success");
+                    JSONObject responce= new JSONObject(result);
+                    message = responce.getString("message");
+                    success = responce.getInt("success");
+                    isAdmin = responce.getInt("isAdmin");
+                    if (success==1){
+                        myIntent = new Intent(LoginActivity.this,MainActivity.class);
+                        myIntent.putExtra("username", username); //Optional parameters
+                        myIntent.putExtra("isAdmin", isAdmin); //Optional parameters
+
+                        startActivity(myIntent);
+                        writeToFile(username, "USERID.TXT");
+                        closeKeyboard(view);
+                        Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
                 } catch (JSONException e) {
-                    message="Nekaj je šlo narobe. Preverite povezavo in poskusi znova!";
+                    ///message="Nekaj je šlo narobe. Preverite povezavo in poskusi znova!";
                     e.printStackTrace();
                 }
             }
-            Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
-            if (success==1){
-                myIntent = new Intent(LoginActivity.this,MainActivity.class);
-                myIntent.putExtra("username", username); //Optional parameters
-
-                startActivity(myIntent);
-                writeToFile(username, "USERID.TXT");
-                closeKeyboard(view);
-                finish();
-            }else{
-
-            }
-
-        }).execute(Constants.LOGIN_URL, "login", query);
+        },"login",query,"");
 
     }
 
@@ -132,6 +146,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public boolean update_app = true;
+    RequestQueue queue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,33 +155,14 @@ public class LoginActivity extends AppCompatActivity {
         if(isOnline(this) && update_app){
             UpdateChecker.checkForDialog(this);
         }
-
+        queue = Volley.newRequestQueue(this);
         String username = readFromFile("USERID.TXT");
         EditText ET_username = findViewById(R.id.TV_username);
         PinView ET_password = findViewById(R.id.ET_password);
         ET_username.setText(username);
         //getSupportActionBar().hide();
-       /* Button loginButton = findViewById(R.id.loginButton);
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                username = ET_username.getText().toString();
-                password = ET_password.getText().toString();
-                if(isOnline(LoginActivity.this)){
-                    if (username!= "" && password!= "") {
 
-
-                        login(view, ET_username.getText().toString(),ET_password.getText().toString());
-
-                    }
-
-                }
-
-            }
-
-        });*/
-
-       ET_password.setOnKeyListener(new View.OnKeyListener() {
+        ET_password.setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 // If the event is a key-down event on the "enter" button
                 if ((event.getAction() == KeyEvent.ACTION_DOWN  &&
@@ -187,8 +183,40 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    private void getString(VolleyCallback callback, String command, String query, String imageData) {
+        StringRequest postRequest = new StringRequest(Request.Method.POST,"http://192.168.64.105/kostak/action.php",
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        callback.onSuccess(response);
 
+                    }
+                }, new Response.ErrorListener()
+        {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // error
+                Log.d("Error.Response", error.toString());
+            }
+        }
+        ) {
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("command", command);
+                params.put("query", query);
+                params.put("imgData", imageData);
 
-
+                return params;
+            }
+        };
+        queue.add(postRequest);
+    }
 }
+
+
+
 

@@ -5,26 +5,38 @@
       <map>
         <entry key="..\:/OneDrive - Univerza v Mariboru/Programiranje/NOVO/app/src/main/res/drawable/border.xml" value="0.32314814814814813" />
         <entry key="..\:/OneDrive - Univerza v Mariboru/Programiranje/NOVO/app/src/main/res/drawable/button_selector.xml" value="0.37864583333333335" />
+        <entry key="..\:/OneDrive - Univerza v Mariboru/Programiranje/NOVO/app/src/main/res/drawable/card_arrow_down.xml" value="0.24427083333333333" />
         <entry key="..\:/OneDrive - Univerza v Mariboru/Programiranje/NOVO/app/src/main/res/drawable/card_background.xml" value="0.37864583333333335" />
+        <entry key="..\:/OneDrive - Univerza v Mariboru/Programiranje/NOVO/app/src/main/res/drawable/card_background_red.xml" value="0.14046052631578948" />
+        <entry key="..\:/OneDrive - Univerza v Mariboru/Programiranje/NOVO/app/src/main/res/drawable/card_edit.xml" value="0.23914473684210527" />
+        <entry key="..\:/OneDrive - Univerza v Mariboru/Programiranje/NOVO/app/src/main/res/drawable/card_info.xml" value="0.23914473684210527" />
+        <entry key="..\:/OneDrive - Univerza v Mariboru/Programiranje/NOVO/app/src/main/res/drawable/card_location_marker.xml" value="0.23914473684210527" />
         <entry key="..\:/OneDrive - Univerza v Mariboru/Programiranje/NOVO/app/src/main/res/drawable/card_transparent_background.xml" value="0.3717948717948718" />
         <entry key="..\:/OneDrive - Univerza v Mariboru/Programiranje/NOVO/app/src/main/res/drawable/colorrow_background_selector.xml" value="0.21927083333333333" />
         <entry key="..\:/OneDrive - Univerza v Mariboru/Programiranje/NOVO/app/src/main/res/drawable/frame_close.xml" value="0.2546875" />
         <entry key="..\:/OneDrive - Univerza v Mariboru/Programiranje/NOVO/app/src/main/res/drawable/global_search.xml" value="0.36302083333333335" />
+        <entry key="..\:/OneDrive - Univerza v Mariboru/Programiranje/NOVO/app/src/main/res/drawable/ic_admin.xml" value="0.21614583333333334" />
         <entry key="..\:/OneDrive - Univerza v Mariboru/Programiranje/NOVO/app/src/main/res/drawable/ic_arrow_drop_down.xml" value="0.22447916666666667" />
+        <entry key="..\:/OneDrive - Univerza v Mariboru/Programiranje/NOVO/app/src/main/res/drawable/ic_lock_24.xml" value="0.3359375" />
+        <entry key="..\:/OneDrive - Univerza v Mariboru/Programiranje/NOVO/app/src/main/res/drawable/ic_nfc.xml" value="0.37395833333333334" />
+        <entry key="..\:/OneDrive - Univerza v Mariboru/Programiranje/NOVO/app/src/main/res/drawable/ic_no_nfc.xml" value="0.35833333333333334" />
         <entry key="..\:/OneDrive - Univerza v Mariboru/Programiranje/NOVO/app/src/main/res/drawable/ic_scan.xml" value="0.36302083333333335" />
         <entry key="..\:/OneDrive - Univerza v Mariboru/Programiranje/NOVO/app/src/main/res/drawable/ic_username.xml" value="0.37864583333333335" />
         <entry key="..\:/OneDrive - Univerza v Mariboru/Programiranje/NOVO/app/src/main/res/drawable/not_found.xml" value="0.3729166666666667" />
         <entry key="..\:/OneDrive - Univerza v Mariboru/Programiranje/NOVO/app/src/main/res/drawable/round_corners.xml" value="0.37864583333333335" />
+        <entry key="..\:/OneDrive - Univerza v Mariboru/Programiranje/NOVO/app/src/main/res/drawable/round_corners_10dp.xml" value="0.23914473684210527" />
         <entry key="..\:/OneDrive - Univerza v Mariboru/Programiranje/NOVO/app/src/main/res/drawable/round_corners_light_tranparent.xml" value="0.37395833333333334" />
         <entry key="..\:/OneDrive - Univerza v Mariboru/Programiranje/NOVO/app/src/main/res/drawable/round_corners_top.xml" value="0.37864583333333335" />
         <entry key="..\:/OneDrive - Univerza v Mariboru/Programiranje/NOVO/app/src/main/res/drawable/row_background_selector.xml" value="0.37864583333333335" />
         <entry key="..\:/OneDrive - Univerza v Mariboru/Programiranje/NOVO/app/src/main/res/drawable/search_phone.xml" value="0.36302083333333335" />
-        <entry key="..\:/OneDrive - Univerza v Mariboru/Programiranje/NOVO/app/src/main/res/layout/activity_login.xml" value="0.33" />
-        <entry key="..\:/OneDrive - Univerza v Mariboru/Programiranje/NOVO/app/src/main/res/layout/activity_main.xml" value="0.3425990271021543" />
+        <entry key="..\:/OneDrive - Univerza v Mariboru/Programiranje/NOVO/app/src/main/res/drawable/switch_text_selector.xml" value="0.14210526315789473" />
+        <entry key="..\:/OneDrive - Univerza v Mariboru/Programiranje/NOVO/app/src/main/res/layout/activity_login.xml" value="0.22" />
+        <entry key="..\:/OneDrive - Univerza v Mariboru/Programiranje/NOVO/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/OneDrive - Univerza v Mariboru/Programiranje/NOVO/app/src/main/res/layout/activity_scan_code.xml" value="0.1762917933130699" />
-        <entry key="..\:/OneDrive - Univerza v Mariboru/Programiranje/NOVO/app/src/main/res/layout/card_layout.xml" value="0.1" />
+        <entry key="..\:/OneDrive - Univerza v Mariboru/Programiranje/NOVO/app/src/main/res/layout/card_layout.xml" value="0.33" />
         <entry key="..\:/OneDrive - Univerza v Mariboru/Programiranje/NOVO/app/src/main/res/layout/fragment_fullscreen.xml" value="0.3578125" />
-        <entry key="..\:/OneDrive - Univerza v Mariboru/Programiranje/NOVO/app/src/main/res/layout/fragment_image.xml" value="0.2332155477031802" />
+        <entry key="..\:/OneDrive - Univerza v Mariboru/Programiranje/NOVO/app/src/main/res/layout/fragment_image.xml" value="0.1" />
+        <entry key="..\:/OneDrive - Univerza v Mariboru/Programiranje/NOVO/app/src/main/res/layout/fragment_info.xml" value="0.25" />
         <entry key="..\:/OneDrive - Univerza v Mariboru/Programiranje/NOVO/app/src/main/res/layout/fragment_main.xml" value="0.29213483146067415" />
         <entry key="..\:/OneDrive - Univerza v Mariboru/Programiranje/NOVO/app/src/main/res/layout/fragment_map.xml" value="0.18085106382978725" />
         <entry key="..\:/OneDrive - Univerza v Mariboru/Programiranje/NOVO/app/src/main/res/layout/fragment_stran0.xml" value="0.1" />
@@ -52,7 +64,7 @@
   <component name="VisualizationToolProject">
     <option name="state">
       <ProjectState>
-        <option name="scale" value="1.1" />
+        <option name="scale" value="0.6886160714285714" />
       </ProjectState>
     </option>
   </component>

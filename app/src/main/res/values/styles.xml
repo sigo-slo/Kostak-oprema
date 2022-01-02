@@ -1,14 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="mySwitch" parent="TextAppearance.AppCompat.Medium">
+            <item name="android:textSize">20sp</item>
+            <item name="android:textColor">@drawable/switch_text_selector</item>
 
-    <style name="Widget.Theme.KostakDd.ButtonBar.Fullscreen" parent="">
-        <item name="android:background">@color/black_overlay</item>
-        <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
+            <item name="android:textStyle">bold</item>
+2
+
     </style>
-
-    <style name="MySwitchApperance" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">18sp</item>
-        <item name="android:textColor">@color/blue</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
 </resources>
+
+
+

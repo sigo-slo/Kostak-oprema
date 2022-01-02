@@ -1,7 +1,5 @@
 package si.kostakdd.parser;
 
-import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,7 +18,7 @@ import java.util.HashMap;
 
 public class JSONParser {
 
-    String charset = "UTF-8";
+    final String charset = "UTF-8";
     HttpURLConnection conn;
     DataOutputStream wr;
     StringBuilder result;
@@ -45,7 +43,7 @@ public class JSONParser {
 
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
-                Log.d("JSon parsing ni uspel","JsonParser line 36");
+            //    Log.d("JSon parsing ni uspel","JsonParser line 36");
             }
             i++;
         }
@@ -120,7 +118,7 @@ public class JSONParser {
                 result.append(line);
             }
 
-            Log.d("JSON Parser", "result: " + result.toString());
+           // Log.d("JSON Parser", "result: " + result.toString());
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -133,21 +131,11 @@ public class JSONParser {
         try {
             jObj = new JSONObject(result.toString());
         } catch (JSONException e) {
-                Log.e("JSON Parser - line 140", "Not JSONObject... " + e.toString());
+               //Log.e("JSON Parser - line 140", "Not JSONObject... " + e.toString());
 
         }
 
                 // It's something else, like a string or numbe
-            /*if (jObj != null) {
-                JSONArray data = jObj.getJSONArray("data");
-
-                for (int i = 0; i < categories.length(); i++) {
-                    JSONObject catObj = (JSONObject) categories.get(i);
-                    Category cat = new Category(catObj.getInt("id"),
-                            catObj.getString("name"));
-                    categoriesList.add(cat);
-                }
-            }*/
 
         // return JSON Object
         return jObj;

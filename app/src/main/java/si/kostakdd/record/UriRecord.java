@@ -26,6 +26,7 @@ import com.google.common.primitives.Bytes;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.Objects;
 
 /*
 za spodnje importe je potrebno v build.gradle dodati
@@ -138,12 +139,10 @@ public class UriRecord implements ParsedNdefRecord {
          */
         String prefix = URI_PREFIX_MAP.get(payload[0]);
         byte[] fullUri =
-                Bytes.concat(prefix.getBytes(StandardCharsets.UTF_8), Arrays.copyOfRange(payload, 1,
+                Bytes.concat(Objects.requireNonNull(prefix).getBytes(StandardCharsets.UTF_8), Arrays.copyOfRange(payload, 1,
                         payload.length));
         Uri uri = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-            uri = Uri.parse(new String(fullUri, StandardCharsets.UTF_8));
-        }
+        uri = Uri.parse(new String(fullUri, StandardCharsets.UTF_8));
         return new UriRecord(uri);
     }
 

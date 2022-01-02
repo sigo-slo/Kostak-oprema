@@ -1,5 +1,6 @@
 package si.kostakdd.update;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -17,6 +18,7 @@ import si.kostakdd.R;
  * @author feicien (ithcheng@gmail.com)
  * @since 2016-07-05 19:21
  */
+@SuppressLint("StaticFieldLeak")
 class CheckUpdateTask extends AsyncTask<Void, Void, String> {
 
     private ProgressDialog dialog;

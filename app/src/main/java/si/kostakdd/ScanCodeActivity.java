@@ -15,7 +15,7 @@ import com.google.zxing.Result;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class ScanCodeActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
-    int MY_PERMISSIONS_REQUEST_CAMERA=0;
+    final int MY_PERMISSIONS_REQUEST_CAMERA=0;
 
     ZXingScannerView scannerView;
     @Override
@@ -39,13 +39,6 @@ public class ScanCodeActivity extends AppCompatActivity implements ZXingScannerV
         super.onPause();
         scannerView.stopCamera();
     }
-
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        scannerView.setResultHandler(this);
-//        scannerView.startCamera();
-//    }
 
     @Override
     protected void onPostResume() {

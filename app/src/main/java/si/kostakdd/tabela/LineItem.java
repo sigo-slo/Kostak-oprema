@@ -1,21 +1,34 @@
 package si.kostakdd.tabela;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 public class LineItem {
-    public String inv_st,opis,geoLokacija,geoCoord,row_num;
+    public String row_num, inv_st, opis, geoCoord, geoLokacija, assignedTo;
+    public int status;
+    //public String Json;
+    public boolean isExpanded;
 
-    public JSONObject Json;
+    public LineItem(String row_num, String inv_st, String opis, String geoCoord, String geoLokacija, String assignedTo, int status) {
 
-    public LineItem(int i, String JSONstring) throws JSONException {
+        this.row_num=row_num;
+        this.inv_st=inv_st;
+        this.opis=opis;
+        this.geoCoord=geoCoord;
+        this.geoLokacija=geoLokacija;
+        this.assignedTo=assignedTo;
+        this.status=status;
 
-        this.Json = new JSONObject(JSONstring);
-        this.inv_st = this.Json.getString("Inv_št");
-        this.row_num = i + ".";
-        this.opis = this.Json.getString("Naziv_osn_sred") + " (" +  this.inv_st + ")";
-        this.geoCoord = this. Json.getString("GEOCoord");
-        this.geoLokacija = this.Json.getString("GEOLokacija");
+
+
+
 
     }
+    public boolean getExpanded() {
+        //Log.d("LINE_ITEM"+ row_num, "setExpandedReturned: "+isExpanded);
+        return isExpanded;
+
+    }
+    public void setExpanded(boolean expanded) {
+        isExpanded = expanded;
+        //Log.d("LINE_ITEM"+row_num, "setExpanded: "+isExpanded);
+    }
+
 }

@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
 
-    >
+    android:visibility="visible"
+    tools:visibility="visible">
 
 
     <androidx.cardview.widget.CardView
@@ -19,15 +20,16 @@
         app:cardElevation="5dp"
         app:cardUseCompatPadding="true"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
 
+            android:id="@+id/background_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/card_background"
-            >
+            android:background="@drawable/card_background">
 
             <TextView
                 android:id="@+id/txtrow"
@@ -44,21 +46,34 @@
                 tools:text="št." />
 
             <TextView
+                android:id="@+id/inv_st"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="16dp"
+                android:elegantTextHeight="false"
+                android:gravity="fill"
+                android:textColor="@color/blue"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/txtrow"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Invent.Št" />
+
+            <TextView
                 android:id="@+id/txtOpis"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
 
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
                 android:elegantTextHeight="false"
                 android:textColor="@color/blue"
                 android:textSize="16sp"
-                android:textStyle="bold"
+                android:textStyle="italic"
                 app:layout_constraintBottom_toTopOf="@+id/divider"
                 app:layout_constraintEnd_toStartOf="@+id/kartica_expand"
                 app:layout_constraintStart_toEndOf="@+id/txtrow"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/inv_st"
                 tools:text="Opis opreme" />
 
             <ImageView
@@ -70,112 +85,206 @@
                 app:layout_constraintTop_toTopOf="@+id/txtrow"
                 app:srcCompat="@drawable/card_arrow_down" />
 
-            <TableRow
-                android:id="@+id/tableRow"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/edit_extra"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/round_corners_10dp"
+                android:foregroundGravity="center_vertical|center_horizontal"
+                android:padding="5dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/expandedItems"
+                tools:visibility="visible">
+
+                <Button
+                    android:id="@+id/btn_assign"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/round_corners_10dp"
+                    android:backgroundTint="@color/white"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:padding="10dp"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:text="Prevzemi opremo"
+                    android:textColor="@color/blue"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/sw_state"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <si.kostakdd.ui.main.MySwitch
+                    android:id="@+id/sw_state"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+
+                    android:elegantTextHeight="true"
+                    android:singleLine="false"
+                    android:text="@string/change_state"
+                    android:textAlignment="center"
+                    android:textColor="@color/blue"
+                    android:textOff="NE DELA"
+                    android:textOn="DELA"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/btn_assign"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:showText="true"
+                    app:splitTrack="false"
+                    app:switchTextAppearance="@style/mySwitch" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TableRow
+                android:id="@+id/expandedItems"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
+                android:orientation="vertical"
+                android:paddingBottom="16dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@+id/edit_extra"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/divider">
+                app:layout_constraintTop_toBottomOf="@+id/divider"
+                tools:visibility="visible">
 
-                <ImageView
-                    android:id="@+id/imageInfo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="35dp"
+                <LinearLayout
+                    android:id="@+id/linLayInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/card_info" />
+                    android:orientation="vertical"
+                    android:paddingTop="5dp">
 
-                <ImageView
-                    android:id="@+id/imageEdit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="35dp"
+                    <ImageView
+                        android:id="@+id/Info"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center|top"
+                        android:layout_weight="3"
+                        android:padding="3dp"
+                        app:srcCompat="@drawable/card_info" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="5"
+                        android:gravity="bottom"
+                        android:maxLines="1"
+                        android:paddingTop="2dp"
+                        android:text="Info"
+                        android:textAlignment="center"
+                        android:textColor="@color/blue"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/Edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/card_edit" />
+                    android:orientation="vertical"
+                    android:paddingTop="5dp">
 
-                <ImageView
-                    android:id="@+id/imagePic"
-                    android:layout_width="wrap_content"
-                    android:layout_height="35dp"
+                    <ImageView
+                        android:id="@+id/imageEdit"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center|top"
+                        android:layout_weight="3"
+                        android:padding="3dp"
+                        android:src="@drawable/card_edit" />
+
+                    <TextView
+                        android:id="@+id/tv_edit"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="5"
+                        android:drawablePadding="-2sp"
+                        android:gravity="bottom"
+                        android:includeFontPadding="true"
+                        android:maxLines="1"
+                        android:text="Uredi"
+                        android:textAlignment="center"
+                        android:textColor="@color/blue"
+                        android:textSize="16sp"
+                        app:drawableEndCompat="@drawable/card_arrow_down" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/Pic"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/card_photo" />
+                    android:orientation="vertical"
+                    android:paddingTop="5dp">
 
-                <ImageView
-                    android:id="@+id/imageLoc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="35dp"
+                    <ImageView
+                        android:id="@+id/imagePic"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center|top"
+                        android:layout_weight="3"
+                        android:padding="3dp"
+                        app:srcCompat="@drawable/card_photo" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="5"
+                        android:gravity="bottom"
+                        android:maxLines="1"
+                        android:paddingTop="2dp"
+                        android:text="Slika"
+                        android:textAlignment="center"
+                        android:textColor="@color/blue"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/Loc"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/card_location_marker" />
+                    android:orientation="vertical"
+                    android:paddingTop="5dp">
 
-            </TableRow>
+                    <ImageView
+                        android:id="@+id/imageLoc"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center|top"
+                        android:layout_weight="3"
+                        android:padding="3dp"
+                        app:srcCompat="@drawable/card_location_marker" />
 
-            <TableRow
-                android:id="@+id/tableRow2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tableRow">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="5"
+                        android:gravity="bottom"
+                        android:maxLines="1"
+                        android:paddingTop="2dp"
+                        android:text="Lokacija"
+                        android:textAlignment="center"
+                        android:textColor="@color/blue"
+                        android:textSize="16sp" />
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/textView"
-                    style="@style/MaterialAlertDialog.MaterialComponents.Title.Text"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:text="Informacije"
-                    android:textAlignment="inherit"
-                    android:textColor="@color/blue"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textView2"
-                    style="@style/MaterialAlertDialog.MaterialComponents.Title.Text"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:text="Uredi"
-                    android:textAlignment="inherit"
-                    android:textColor="@color/blue"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textView3"
-                    style="@style/MaterialAlertDialog.MaterialComponents.Title.Text"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:text="Poglej sliko"
-                    android:textAlignment="inherit"
-                    android:textColor="@color/blue"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textView4"
-                    style="@style/MaterialAlertDialog.MaterialComponents.Title.Text"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:foregroundGravity="left"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:text="Lokacija"
-                    android:textAlignment="inherit"
-                    android:textColor="@color/blue"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
             </TableRow>
 
             <View
@@ -185,22 +294,10 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:background="@color/blue"
-                app:layout_constraintBottom_toTopOf="@+id/tableRow"
+                app:layout_constraintBottom_toTopOf="@+id/expandedItems"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtOpis" />
-
-            <androidx.constraintlayout.widget.Group
-                android:id="@+id/expandedItems"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:constraint_referenced_ids="tableRow,tableRow2,divider"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtOpis"
-                tools:visibility="visible" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

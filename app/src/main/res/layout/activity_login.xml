@@ -3,15 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/body_background">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/appbar_layout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@drawable/body_background"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -22,14 +22,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:drawableStart="@drawable/ic_username"
+            android:background="@color/transparent"
             android:drawablePadding="15dp"
             android:elegantTextHeight="true"
             android:hint="@string/user"
             android:inputType="textPersonName"
             android:text="@string/user"
             android:textAlignment="viewStart"
-            android:textSize="24sp"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/barImageView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/barImageView" />
@@ -47,30 +49,29 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/body_layout"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="120dp"
-        android:background="@drawable/round_corners_top"
+        android:layout_height="wrap_content"
 
+        android:layout_marginTop="15dp"
+        android:background="@drawable/round_corners"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/appbar_layout"
         app:layout_constraintStart_toStartOf="@+id/appbar_layout"
-        app:layout_constraintTop_toTopOf="@+id/appbar_layout">
+        app:layout_constraintTop_toBottomOf="@+id/appbar_layout">
 
         <com.chaos.view.PinView
             android:id="@+id/ET_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
+            android:layout_marginBottom="35dp"
             android:background="@color/body_background_color"
+
             android:clickable="true"
-
             android:cursorVisible="true"
+
+
             android:drawableStart="@drawable/ic_lock_24"
-
-
             android:drawingCacheQuality="auto"
             android:duplicateParentState="true"
             android:focusable="auto"
@@ -84,6 +85,7 @@
             app:cursorColor="@color/black"
             app:hideLineWhenFilled="true"
             app:itemRadius="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView3"
@@ -93,34 +95,11 @@
             android:id="@+id/imageView3"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:layout_marginTop="64dp"
+            android:layout_marginTop="35dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_lock_24" />
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardView2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="25dp"
-            app:cardElevation="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="220dp"
-                app:srcCompat="@drawable/uprava" />
-
-
-        </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

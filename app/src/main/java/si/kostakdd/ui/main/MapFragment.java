@@ -1,9 +1,5 @@
 package si.kostakdd.ui.main;
 
-import static si.kostakdd.Constants.IMAGE_FORMAT;
-import static si.kostakdd.Constants.SERVER_IMG_FOLDER;
-
-import android.Manifest;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import androidx.core.app.ActivityCompat;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -23,6 +19,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Objects;
 
 import si.kostakdd.Constants;
 import si.kostakdd.R;
@@ -68,20 +66,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            String Jstring = getArguments().getString(argData);
-            try {
-                // TODO: Rename and change types of parameters
-                JSONObject jarray = new JSONObject(Jstring);
+            String lok= getArguments().getString(argData);
 
-                String lok = jarray.getString("GEOCoord");
+                // TODO: Rename and change types of parameters
 
                 Log.d("MapFragment-lokacija",lok);
 
                 lokacija = lok.split(",");
 
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+
 
         }
     }
@@ -102,7 +95,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getFragmentManager().popBackStack();
+                getActivity().getSupportFragmentManager().popBackStack();
             }
         });
 
@@ -125,7 +118,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
         Bundle mapViewBundle = outState.getBundle(Constants.MAPVIEW_BUNDLE_KEY);

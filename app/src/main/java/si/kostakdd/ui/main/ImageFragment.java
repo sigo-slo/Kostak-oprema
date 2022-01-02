@@ -12,10 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -58,17 +56,15 @@ public class ImageFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            String Jstring = getArguments().getString(argData);
-            try {
+            //String Jstring = getArguments().getString(argData);
+
                 // TODO: Rename and change types of parameters
-                JSONObject jarray = new JSONObject(Jstring);
+               // JSONObject jarray = new JSONObject(Jstring);
 
-                picURL = SERVER_IMG_FOLDER + jarray.getString("Inv_št") + IMAGE_FORMAT;
+                picURL = SERVER_IMG_FOLDER + getArguments().getString(argData) + IMAGE_FORMAT;
 
 
-            } catch (JSONException e) {
-                    e.printStackTrace();
-            }
+
 
 
         }
@@ -84,7 +80,7 @@ public class ImageFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getFragmentManager().popBackStack();
+                        getActivity().getSupportFragmentManager().popBackStack();
             }
         });
 
