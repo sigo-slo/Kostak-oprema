@@ -1,5 +1,7 @@
 package si.kostakdd;
 
+import static si.kostakdd.Constants.LOGIN_URL;
+
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -100,35 +102,42 @@ public class LoginActivity extends AppCompatActivity {
     {
         closeKeyboard(view);
         String query = username +","+password.getText().toString();
-        getString(new VolleyCallback() {
-            @Override
-            public void onSuccess(String result) {
-                    Log.d("login",result);
-                String message;
-                int success ;
-                Intent myIntent;
-                int isAdmin;
-                try {
-                    JSONObject responce= new JSONObject(result);
-                    message = responce.getString("message");
-                    success = responce.getInt("success");
-                    isAdmin = responce.getInt("isAdmin");
-                    if (success==1){
-                        myIntent = new Intent(LoginActivity.this,MainActivity.class);
-                        myIntent.putExtra("username", username); //Optional parameters
-                        myIntent.putExtra("isAdmin", isAdmin); //Optional parameters
+        Log.d("login",query);
+        getString(result -> {
 
-                        startActivity(myIntent);
-                        writeToFile(username, "USERID.TXT");
-                        closeKeyboard(view);
-                        Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
-                        finish();
-                    }
-                } catch (JSONException e) {
-                    ///message="Nekaj je šlo narobe. Preverite povezavo in poskusi znova!";
-                    e.printStackTrace();
+            String message="Napaka pri vpisu.\nPreverite internetno povezavo in poskusite ponovno.";
+            int success ;
+            Intent myIntent;
+            int isAdmin;
+           // try {
+                Log.d("LOGIN RESPONCE", result);
+            JSONObject responce= null;
+            try {
+                responce = new JSONObject(result);
+                message = responce.getString("message");
+                success = responce.getInt("success");
+
+                if (success==1){
+                    myIntent = new Intent(LoginActivity.this,MainActivity.class);
+                    myIntent.putExtra("username", username); //Optional parameters
+                    myIntent.putExtra("isAdmin", responce.getInt("isAdmin")); //Optional parameters
+
+                    startActivity(myIntent);
+                    writeToFile(username, "USERID.TXT");
+                    closeKeyboard(view);
+
+                    finish();
                 }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+
             }
+            Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
+          //  } catch (JSONException e) {
+                ///message="Nekaj je šlo narobe. Preverite povezavo in poskusi znova!";
+          //     e.printStackTrace();
+          //  }
         },"login",query,"");
 
     }
@@ -184,7 +193,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void getString(VolleyCallback callback, String command, String query, String imageData) {
-        StringRequest postRequest = new StringRequest(Request.Method.POST,"http://192.168.64.105/kostak/action.php",
+        StringRequest postRequest = new StringRequest(Request.Method.POST,LOGIN_URL,
                 new Response.Listener<String>()
                 {
                     @Override

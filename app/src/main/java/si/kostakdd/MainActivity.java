@@ -145,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void startSearch(){
         if(isGlobalSearch)updateLocalDb();
+        Log.d("GLOBAL SEARCH", isGlobalSearch +"");
         searchView.setVisibility(View.VISIBLE);
         searchView.setIconified(false);
 
@@ -161,6 +162,7 @@ public class MainActivity extends AppCompatActivity {
         isGlobalSearch=false;
 
     }
+
 
 
     private ImageView iv_search, iv_search_global, iv_scan, iv_admin;
@@ -185,18 +187,21 @@ public class MainActivity extends AppCompatActivity {
            int success;
            JSONObject responce;
            try {
+               Log.d("UPDATE_LOCAL_DB:",result);
                responce= new JSONObject(result);
+
                message = responce.getString("message");
                success = responce.getInt("success");
                if (success==1){
                    writeToFile(responce.toString(), "KOSTAKDB.TXT");
-                   Log.d("UPDATE_LOCAL_DB:",message);
+                  // Log.d("UPDATE_LOCAL_DB:",message);
                    updateTable(responce);
                }
            } catch (JSONException e) {
 
                e.printStackTrace();
            }
+
            //Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
        }, "getEquipDB",username,"");
 
@@ -250,20 +255,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
    public void setEquipmentUser(String inv_st) {
-        String query = username + "_" + getMyLocation() + "_" + inv_st;
+        //action.php (Inv_št,  user, TimeOfEvent,  Tip_spremembe, GEOLokacija)
+        String query = inv_st + "_" + username + "_" + getMyLocation();
         getString(result -> {
             String message;
             int success;
             JSONObject responce;
             try {
+                Log.d("SET_USER_QUERY:",query);
+                Log.d("SET_USER_QUERY_res",result);
                 responce= new JSONObject(result);
                 message = responce.getString("message");
                 success = responce.getInt("success");
                 if (success==1){
                     writeToFile(result, "KOSTAKDB.TXT");
-                    Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+
                     Log.d("SET_USER:",inv_st +"-"+ message);
                 }
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
             } catch (JSONException e) {
 
                 e.printStackTrace();
@@ -273,8 +282,10 @@ public class MainActivity extends AppCompatActivity {
        // return result;
     }
 
-    public void setStatus(String inv_st, int jeAktivna) {
-        String query = inv_st + "_" + getMyLocation() + "_" + (jeAktivna);
+    public void setStatus(String inv_st, int jeAktivna, String opis) {
+        //ACTION.php
+        //Inv_št, user, TimeOfEvent,  Tip_spremembe, OpisSpremembe, GEOLokacija
+        String query = inv_st + "_" + username + "_" + jeAktivna+"_"+ opis+"_" + getMyLocation();
         getString(result -> {
             String message;
             int success;
@@ -302,7 +313,7 @@ public class MainActivity extends AppCompatActivity {
     private String getMyLocation() {
         String addr = lokacijaAddress;
         String koord = lokacijaCoord;
-        return koord+"_"+addr;
+        return koord+"-*-"+addr;
     }
 
     // Komunikacija s strežnikom
@@ -328,6 +339,7 @@ public class MainActivity extends AppCompatActivity {
         queue.add(postRequest);
     }
     // ////////////////////////////////////////////////////////Komunikacija s strežnikom
+    private boolean equipmenSearch=false;
     public void findEquipment(String barcode, String scanType, String action) {
         //Log.d("FIND_EQUIPMENT;", scanType + " | " + barcode + " | " + action);
         if (barcode.length() > 2) {
@@ -353,7 +365,7 @@ public class MainActivity extends AppCompatActivity {
                         Log.d("getEquipmentData:",inv_st +"-"+ message);
                         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
                         updateTable(responce);
-
+                        equipmenSearch=true;
                     }
                 } catch (JSONException e) {
 
@@ -630,26 +642,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void updateUserEquipmentTable(String query) {
-       getString(new VolleyCallback() {
-           @Override
-           public void onSuccess(String result) {
-               String message="";
-               int success = 0;
-               try {
-                   JSONObject responce= new JSONObject(result);
-                   message = responce.getString("message");
-                   success = responce.getInt("success");
-                      if (success==1) {
-                          updateTable(responce);
-                          Log.d("getUserEquip", message);
-                     }
+       getString(result -> {
+           String message="";
+           int success = 0;
+           try {
+               JSONObject responce= new JSONObject(result);
+               message = responce.getString("message");
+               success = responce.getInt("success");
+                  if (success==1) {
+                      updateTable(responce);
+                      Log.d("getUserEquip", message);
+                 }
 
-               } catch (JSONException e) {
-                   //message="Nekaj je šlo narobe. Preverite povezavo in poskusi znova!";
-                   e.printStackTrace();
-               }
-               //Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+           } catch (JSONException e) {
+               //message="Nekaj je šlo narobe. Preverite povezavo in poskusi znova!";
+               e.printStackTrace();
            }
+           //Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
        },"getUserEquip", query, "");
     }
 
@@ -974,10 +983,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         int fragsize = getSupportFragmentManager().getFragments().size();
-        if (searchView != null && !searchView.isIconified()) {
+        if (searchView != null && searchView.getVisibility()==View.VISIBLE) {
             stopSearch();
-       // } else if (inv_st != null) {
-       //     inv_st = null;
+            // } else if (inv_st != null) {
+            //     inv_st = null;
+
+        } else if (equipmenSearch) {
+            updateUserEquipmentTable(username);
+            equipmenSearch=false;
 
 
         } else if (fragsize>1) {

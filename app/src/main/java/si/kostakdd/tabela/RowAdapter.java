@@ -1,9 +1,12 @@
 package si.kostakdd.tabela;
 
+import android.app.Dialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
@@ -13,7 +16,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
@@ -51,7 +53,7 @@ public class RowAdapter extends RecyclerView.Adapter<RowAdapter.RowViewHolder> i
        // public  JSONObject Json;
         public  TextView txtopis,inv_st, tv_edit;
 
-        public  CardView row;
+        public  ConstraintLayout row;
         public  TableRow expandeditems;
         public  LinearLayout Edit,Pic,Loc, linLayInfo;
         public  ConstraintLayout edit_extra;
@@ -107,12 +109,81 @@ private void collapse_cardView(){
  //   }
 }
 
+private void showUpdateStatusDialog(String inv,boolean isChecked) {
 
+            final Dialog dialog = new Dialog(recycler.getContext());
+            //We have added a title in the custom layout. So let's disable the default title.
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            //The user will be able to cancel the dialog bu clicking anywhere outside the dialog.
+            dialog.setCancelable(true);
+            //Mention the name of the layout of your custom dialog.
+            dialog.setContentView(R.layout.dialog_main);
 
+            //Initializing the views of the dialog.
+            final EditText opis_napake = dialog.findViewById(R.id.error_desc_et);
+            final EditText opis_popravila = dialog.findViewById(R.id.repair_desc_et);
+            if (isChecked) {
+                opis_popravila.setVisibility(View.VISIBLE);
+            } else {
+                opis_napake.setVisibility(View.VISIBLE);
+            }
+            Button submitButton = dialog.findViewById(R.id.submit_button);
+            Button cancel = dialog.findViewById(R.id.cancel_button);
+            cancel.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    sw_state.setChecked(!isChecked);
+                    if (!isChecked) {
+
+                        row.setBackground(recycler.getContext().getDrawable(R.drawable.card_background));
+                    }
+
+                    else{
+                        row.setBackground(recycler.getContext().getDrawable(R.drawable.card_background_red));
+                    }
+                    dialog.dismiss();
+                    opis_popravila.setVisibility(View.GONE);
+                    opis_napake.setVisibility(View.GONE);
+
+                }
+            });
+
+            submitButton.setOnClickListener(new View.OnClickListener() {
+                String opis="";
+                @Override
+                public void onClick(View v) {
+                    if (isChecked) {
+                        opis = opis_popravila.getText().toString();
+                    } else {
+                        opis = opis_napake.getText().toString();
+                    }
+                    ((MainActivity) recycler.getContext()).setStatus(inv,isChecked?1:0,opis);
+
+                    dialog.dismiss();
+                    opis_popravila.setVisibility(View.GONE);
+                    opis_napake.setVisibility(View.GONE);
+
+                }
+            });
+
+            dialog.show();
+
+        }
+        private void drawSwitch(RowViewHolder  holder, boolean checked) {
+            if (checked) {
+
+                holder.itemView.findViewById(R.id.background_layout).setBackground(recycler.getContext().getDrawable(R.drawable.card_background));
+            }
+
+            else{
+                holder.itemView.findViewById(R.id.background_layout).setBackground(recycler.getContext().getDrawable(R.drawable.card_background_red));
+            }
+        }
 
 public RowViewHolder(View view) {
             super(view);
-            row = view.findViewById(R.id.kartica);
+            row = view.findViewById(R.id.background_layout);
             row_num = view.findViewById(R.id.txtrow);
             txtopis = view.findViewById(R.id.txtOpis);
             inv_st = view.findViewById(R.id.inv_st);
@@ -134,6 +205,8 @@ public RowViewHolder(View view) {
 
 
         }
+
+
     }
 
     public RowAdapter(List<LineItem> list) { ///itemsAdapter
@@ -176,14 +249,8 @@ public RowViewHolder(View view) {
         }
         //holder.imageLoc.setContentDescription(lineItem.Json.toString());
         holder.sw_state.setChecked(lineItem.status == 1);
+        holder.drawSwitch(holder,lineItem.status == 1 );
 
-        if (!holder.sw_state.isChecked()) {
-            holder.itemView.findViewById(R.id.background_layout).setBackground(recycler.getContext().getDrawable(R.drawable.card_background_red));
-        }
-
-        else{
-            holder.itemView.findViewById(R.id.background_layout).setBackground(recycler.getContext().getDrawable(R.drawable.card_background));
-        }
 
         holder.sw_state.setOnCheckedChangeListener((compoundButton, b) -> {
             if (!compoundButton.isPressed()) {
@@ -191,13 +258,7 @@ public RowViewHolder(View view) {
             }
             int adapterPosition= holder.getAdapterPosition();
             LineItem tapped = filteredRowList.get(adapterPosition);
-
-                    if (compoundButton.isChecked() != true) {
-
-                        holder.itemView.findViewById(R.id.background_layout).setBackground(recycler.getContext().getDrawable(R.drawable.card_background_red));
-                    } else{
-                        holder.itemView.findViewById(R.id.background_layout).setBackground(recycler.getContext().getDrawable(R.drawable.card_background));
-                    }
+            holder.drawSwitch(holder, compoundButton.isChecked());
             filteredRowList.set(adapterPosition, new LineItem(
                     tapped.row_num,
                     tapped.inv_st,
@@ -210,7 +271,7 @@ public RowViewHolder(View view) {
                         onItemCheckedChangeListener.onItemCheckedChanged(adapterPosition, compoundButton.isChecked());
                     }
 
-            ((MainActivity) recycler.getContext()).setStatus(tapped.inv_st, compoundButton.isChecked()?1:0);
+            holder.showUpdateStatusDialog(tapped.inv_st, compoundButton.isChecked());
             //holder.collapse_extraEdit();
         }
         );
@@ -250,7 +311,7 @@ public RowViewHolder(View view) {
         holder.linLayInfo.setOnClickListener(v ->
         {///IKONA INFO
             //Toast.makeText(recycler.getContext(), "klik INFO", Toast.LENGTH_SHORT).show();
-            ((MainActivity) recycler.getContext()).findEquipment(lineItem.inv_st, "NFC", "klik na tabelo");
+           // ((MainActivity) recycler.getContext()).findEquipment(lineItem.inv_st, "NFC", "klik na tabelo");
         });
 
 /////////////////ZA klike na ikone oz layout ikon na expnded kartici
@@ -356,7 +417,7 @@ public RowViewHolder(View view) {
                            //System.out.println("Fields: " + Modifier.toString(classVariable.getModifiers())); // modyfiers
                             String test = classVariable.getName();
                             //Log.d("Fields" , test);        //real var name
-                            if(test=="opis" ) {
+                            if(test=="opis" || test=="inv_st" ) {
                                 classVariable.setAccessible(true);                                //var readable
 
 

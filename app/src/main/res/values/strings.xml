@@ -28,5 +28,9 @@
     <string name="status_opreme">Status opreme</string>
     <string name="last_users">Zadnji uporabniki</string>
     <string name="change_state">SPREMENI STANJE OPREME</string>
+    <string name="custom_dialog">Sprememba stanja opreme</string>
+    <string name="opis_napake">Opis napake</string>
+    <string name="opis_popravila">Opis popravila</string>
+    <string name="status_log">Zapiši spremembo</string>
 
 </resources>
