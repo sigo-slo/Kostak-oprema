@@ -35,4 +35,5 @@ public class Constants {
 
     public static final int FRAGMENT_IMAGE = 0;
     public static final int FRAGMENT_MAP = 1;
+    public static final int FRAGMENT_ADMIN = 2;
 }

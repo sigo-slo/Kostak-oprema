@@ -17,11 +17,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.Objects;
-
 import si.kostakdd.Constants;
 import si.kostakdd.R;
 
@@ -72,7 +67,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
                 Log.d("MapFragment-lokacija",lok);
 
-                lokacija = lok.split(",");
+                lokacija = lok.split("-*-")[0].split(",");
 
 
 

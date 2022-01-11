@@ -32,5 +32,7 @@
     <string name="opis_napake">Opis napake</string>
     <string name="opis_popravila">Opis popravila</string>
     <string name="status_log">Zapiši spremembo</string>
+    <string name="vnos_opreme">Vnos opreme</string>
+    <string name="opis_opreme">Opis opreme</string>
 
 </resources>

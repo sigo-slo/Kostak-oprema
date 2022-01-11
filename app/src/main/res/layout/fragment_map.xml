@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#90000000"
     android:clickable="true"
-    tools:context=".ui.main.ImageFragment">
+    tools:context=".ui.main.MapFragment">
 
 
     <ImageView

@@ -99,6 +99,7 @@ import si.kostakdd.parser.NdefMessageParser;
 import si.kostakdd.record.ParsedNdefRecord;
 import si.kostakdd.tabela.LineItem;
 import si.kostakdd.tabela.RowAdapter;
+import si.kostakdd.ui.main.AdminFragment;
 import si.kostakdd.ui.main.ImageFragment;
 import si.kostakdd.ui.main.MapFragment;
 
@@ -129,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String query) {
                 // filter recycler view when text is changed
-                rowAdapter.getFilter().filter(query);
+                if(rowAdapter!=null)rowAdapter.getFilter().filter(query);
                 return false;
             }
         });
@@ -249,7 +250,7 @@ public class MainActivity extends AppCompatActivity {
         if (isAdmin == 1) {
             iv_admin = findViewById(R.id.iv_admin);
             iv_admin.setVisibility(View.VISIBLE);
-            iv_admin.setOnClickListener(v -> Toast.makeText(getApplicationContext(), "Admin click!!", Toast.LENGTH_LONG).show()
+            iv_admin.setOnClickListener(v -> openFragment(Constants.FRAGMENT_ADMIN, username)
             );
         }
     }
@@ -310,7 +311,7 @@ public class MainActivity extends AppCompatActivity {
         // return result;
     }
 
-    private String getMyLocation() {
+    public String getMyLocation() {
         String addr = lokacijaAddress;
         String koord = lokacijaCoord;
         return koord+"-*-"+addr;
@@ -684,11 +685,11 @@ public class MainActivity extends AppCompatActivity {
                 inv_st = jSONObj.getString("Inv_št");
                 row_num = i + ".";
                 opis = jSONObj.getString("Naziv_osn_sred") ;
-                geoCoord = jSONObj.getString("GEOCoord");
+                //geoCoord = jSONObj.getString("GEOCoord");
                 geoLokacija = jSONObj.getString("GEOLokacija");
                 assignedTo = jSONObj.getString("AssignedTo");
 
-                    rowList.add(new LineItem(row_num,inv_st,opis,geoCoord,geoLokacija,assignedTo,status)); //, status, datediff(new Date(), update_date), SERVER_IMG_FOLDER +inv_st + IMAGE_FORMAT));
+                    rowList.add(new LineItem(row_num,inv_st,opis,geoLokacija,assignedTo,status)); //, status, datediff(new Date(), update_date), SERVER_IMG_FOLDER +inv_st + IMAGE_FORMAT));
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -861,16 +862,16 @@ public class MainActivity extends AppCompatActivity {
         }
         return false;
     }
-
+    private ImageView iv_nfc;
     private NfcAdapter nfcAdapter;
     private PendingIntent pendingIntent;
     private void initializeNFC(boolean onResume) {
-        ImageView iv_nfc=findViewById(R.id.iv_nfc);
+        iv_nfc=findViewById(R.id.iv_nfc);
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if (nfcAdapter == null)
         { // Če NFC ni prisoten v napravi
             //Toast.makeText(this, "TA NAPRAVA NE PODPIRA NFC", Toast.LENGTH_LONG).show(); // Objavi sporočilo
-            iv_nfc=findViewById(R.id.iv_nfc);
+
             iv_nfc.setVisibility(View.GONE);
         } else {
 
@@ -916,18 +917,23 @@ public class MainActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         checkLocationPermission();
+
         if (nfcAdapter != null) {// Če aplikacija zazna NFC opremo
+            iv_nfc.setVisibility(View.VISIBLE);
             if (!nfcAdapter.isEnabled()) { // in če ni omogočena
                 //showWirelessSettings(); // napoti uporabnika do nastavitev brezžičnih povezav, kjer je tudi NFC
                 Toast.makeText(this, "NFC čitalnik je onemogočen. Vključite ga v nastavitvah!", Toast.LENGTH_SHORT).show();
-                //nfcitem.setVisible(true);
+
+                iv_nfc.setImageResource(R.drawable.ic_no_nfc);
 
             } else {
                 nfcAdapter.enableForegroundDispatch(this, pendingIntent, null, null);
+                iv_nfc.setImageResource(R.drawable.ic_nfc);
 
 
             }
         }
+        updateUserEquipmentTable(username);
     }
 
     @Override
@@ -996,23 +1002,26 @@ public class MainActivity extends AppCompatActivity {
         } else if (fragsize>1) {
             getSupportFragmentManager().popBackStack();
         } else {
-            new AlertDialog.Builder(this)
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .setTitle("IZHOD")
-                    .setMessage("Ali želite zapustiti aplikacijo?")
-                    .setPositiveButton("Zapusti", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            finish();
-                        }
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setIcon(android.R.drawable.ic_dialog_alert);
+            builder.setTitle("IZHOD");
+            builder.setMessage("Ali želite zapustiti aplikacijo?");
+            builder.setPositiveButton("Zapusti", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                }
 
-                    })
-                    .setNegativeButton("Prekliči", null)
-                    .show();
+            });
+            builder.setNegativeButton("Prekliči", null);
+            AlertDialog alert = builder.create();
+
+            alert.getWindow().setBackgroundDrawableResource(R.drawable.my_dialog);
+            alert.show();
         }
     }
 
-    private RequestQueue queue;
+    public RequestQueue queue;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -1033,6 +1042,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openFragment(int FRAGMENT_TYPE, String data){
+
         switch (FRAGMENT_TYPE){
             case Constants.FRAGMENT_IMAGE:
                 ImageFragment IF = ImageFragment.newInstance(data);
@@ -1045,8 +1055,15 @@ public class MainActivity extends AppCompatActivity {
                 MapFragment MF = MapFragment.newInstance(data);
                 FragmentManager mFM = getSupportFragmentManager();
                 FragmentTransaction mFT = mFM.beginTransaction();
-               // mFT.setCustomAnimations(R.anim.enter_from_right,R.anim.exit_to_right,R.anim.enter_from_right,R.anim.exit_to_right);
+                mFT.setCustomAnimations(R.anim.enter_from_right,R.anim.exit_to_right,R.anim.enter_from_right,R.anim.exit_to_right);
                 mFT.add(R.id.fragment_viewer,MF,"map").addToBackStack("map").commit();
+                break;
+            case Constants.FRAGMENT_ADMIN:
+                AdminFragment MFa = AdminFragment.newInstance(data);
+                FragmentManager mFMa = getSupportFragmentManager();
+                FragmentTransaction mFTa = mFMa.beginTransaction();
+                mFTa.setCustomAnimations(R.anim.enter_from_right,R.anim.exit_to_right,R.anim.enter_from_right,R.anim.exit_to_right);
+                mFTa.add(R.id.fragment_viewer,MFa,"admin").addToBackStack("admin").commit();
                 break;
         }
 

@@ -5,30 +5,11 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#90000000"
+    android:background="@drawable/body_background"
     android:clickable="true"
-    tools:context=".ui.main.ImageFragment">
+    android:padding="16dp"
+    tools:context=".ui.main.AdminFragment">
 
-
-    <com.google.android.material.tabs.TabLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Monday" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tuesday" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Wednesday" />
-    </com.google.android.material.tabs.TabLayout>
 
     <ImageView
         android:id="@+id/iv_close_fragement"
@@ -37,20 +18,79 @@
         android:layout_marginTop="5dp"
         android:clickable="true"
         android:src="@drawable/frame_close"
-        app:layout_constraintStart_toStartOf="@+id/Layout_container"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/Layout_container"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="5dp"
-        android:layout_marginBottom="6dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_close_fragement" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_close_fragement"
+        tools:layout_editor_absoluteY="135dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inv_st_TIL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:counterEnabled="true"
+            app:counterMaxLength="6"
+            app:errorEnabled="true"
+            android:padding="5dp"
+            app:hintTextAppearance="@style/textLayoutApperance">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/round_corners_10dp"
+                android:elevation="15dp"
+                android:hint="@string/id_number"
+                android:inputType="number"
+                android:padding="5dp"
+
+                android:textSize="20sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/opis_TIL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:errorEnabled="true"
+            android:padding="5dp"
+            app:hintTextAppearance="@style/textLayoutApperance">>
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/round_corners_10dp"
+                android:elevation="15dp"
+                android:hint="@string/opis_opreme"
+                android:inputType="textMultiLine"
+                android:minLines="3"
+                android:padding="5dp"
+                android:textAllCaps="true"
+
+                android:textSize="20sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <Button
+            android:id="@+id/vnos_opreme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:background="@drawable/round_corners_10dp"
+            android:text="@string/vnos_opreme" />
+
+
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

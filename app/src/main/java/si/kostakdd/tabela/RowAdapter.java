@@ -1,6 +1,7 @@
 package si.kostakdd.tabela;
 
 import android.app.Dialog;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableRow;
@@ -116,6 +118,7 @@ private void showUpdateStatusDialog(String inv,boolean isChecked) {
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             //The user will be able to cancel the dialog bu clicking anywhere outside the dialog.
             dialog.setCancelable(true);
+            dialog.getWindow().setBackgroundDrawableResource(R.drawable.my_dialog);
             //Mention the name of the layout of your custom dialog.
             dialog.setContentView(R.layout.dialog_main);
 
@@ -128,7 +131,7 @@ private void showUpdateStatusDialog(String inv,boolean isChecked) {
                 opis_napake.setVisibility(View.VISIBLE);
             }
             Button submitButton = dialog.findViewById(R.id.submit_button);
-            Button cancel = dialog.findViewById(R.id.cancel_button);
+            ImageButton cancel = dialog.findViewById(R.id.cancel_button);
             cancel.setOnClickListener(new View.OnClickListener() {
 
                 @Override
@@ -166,7 +169,25 @@ private void showUpdateStatusDialog(String inv,boolean isChecked) {
 
                 }
             });
+            dialog.setOnKeyListener((arg0, keyCode, event) -> {
+                // TODO Auto-generated method stub
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    sw_state.setChecked(!isChecked);
+                    if (!isChecked) {
 
+                        row.setBackground(recycler.getContext().getDrawable(R.drawable.card_background));
+                    }
+
+                    else{
+                        row.setBackground(recycler.getContext().getDrawable(R.drawable.card_background_red));
+                    }
+
+                    opis_popravila.setVisibility(View.GONE);
+                    opis_napake.setVisibility(View.GONE);
+                    dialog.dismiss();
+                }
+                return true;
+            });
             dialog.show();
 
         }
@@ -263,7 +284,7 @@ public RowViewHolder(View view) {
                     tapped.row_num,
                     tapped.inv_st,
                     tapped.opis,
-                    tapped.geoCoord,
+                    //tapped.geoCoord,
                     tapped.geoLokacija,
                     tapped.assignedTo,
                     compoundButton.isChecked()?1:0));
@@ -322,7 +343,7 @@ public RowViewHolder(View view) {
 /////////////////ZA klike na ikone oz layout ikon na expnded kartici
         holder.Loc.setOnClickListener(v ->
                 ////IKONA LOKACIJA
-                ((MainActivity) recycler.getContext()).openFragment(Constants.FRAGMENT_MAP, lineItem.geoCoord)
+                ((MainActivity) recycler.getContext()).openFragment(Constants.FRAGMENT_MAP, lineItem.geoLokacija)
         );
 
 /////////////////ZA klike na ikone oz layout ikon na expnded kartici

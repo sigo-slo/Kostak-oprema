@@ -1,4 +1,14 @@
 <resources>
     <!-- Base application theme. -->
+    <style name="mySwitch" parent="TextAppearance.AppCompat.Medium">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@drawable/switch_text_selector</item>
 
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="MyDialogTheme" parent="@android:style/Theme.Dialog">
+        <item name="android:background">@drawable/my_dialog</item>
+
+    </style>
 </resources>

@@ -12,8 +12,12 @@
     <color name="transparent">#00FFFFFF</color>
 
     <color name="kostak_green">#8dc63f</color>
-    <color name="cardview_start_color">#708dc63f</color>
+    <color name="cardview_start_color">#758dc63f</color>
     <color name="cardview_center_color">@color/white</color>
-    <color name="cardview_end_color">#708dc63f</color>
+    <color name="cardview_end_color">#758dc63f</color>
     <color name="red">#FF0701</color>
+
+    <color name="dialog_start_color">@color/kostak_green</color>
+    <color name="dialog_center_color">@color/white</color>
+    <color name="dialog_end_color">@color/kostak_green</color>
 </resources>
