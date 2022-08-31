@@ -2,9 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/expandedItemsGroup"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
 
+    android:layout_height="wrap_content"
     android:visibility="visible"
     tools:visibility="visible">
 
@@ -29,15 +30,24 @@
             android:id="@+id/background_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/card_background">
+            android:background="@drawable/card_background"
+            android:padding="8dp">
+
+            <ImageView
+                android:id="@+id/kartica_expand"
+                android:layout_width="33dp"
+                android:layout_height="33dp"
+                app:layout_constraintBottom_toBottomOf="@+id/divider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/card_arrow_down" />
 
             <TextView
                 android:id="@+id/txtrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
-                android:elegantTextHeight="false"
+                android:elegantTextHeight="true"
                 android:textColor="@color/blue"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -50,8 +60,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:layout_marginTop="16dp"
-                android:elegantTextHeight="false"
+                android:elegantTextHeight="true"
                 android:gravity="fill"
                 android:textColor="@color/blue"
                 android:textSize="16sp"
@@ -65,7 +74,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
 
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="8dp"
                 android:elegantTextHeight="false"
                 android:textColor="@color/blue"
                 android:textSize="16sp"
@@ -76,82 +85,30 @@
                 app:layout_constraintTop_toBottomOf="@+id/inv_st"
                 tools:text="Opis opreme" />
 
-            <ImageView
-                android:id="@+id/kartica_expand"
-                android:layout_width="33dp"
-                android:layout_height="33dp"
-                app:layout_constraintBottom_toBottomOf="@+id/txtrow"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/txtrow"
-                app:srcCompat="@drawable/card_arrow_down" />
+            <androidx.constraintlayout.widget.Group
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/edit_extra"
-                android:layout_width="match_parent"
+                android:id="@+id/group_exp_itm"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/round_corners_10dp"
-                android:foregroundGravity="center_vertical|center_horizontal"
-                android:padding="5dp"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:constraint_referenced_ids="expandedItems,divider" />
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/blue"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/expandedItems"
-                tools:visibility="visible">
-
-                <Button
-                    android:id="@+id/btn_assign"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/round_corners_10dp"
-                    android:backgroundTint="@color/white"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:padding="10dp"
-                    android:paddingStart="15dp"
-                    android:paddingEnd="15dp"
-                    android:text="Prevzemi opremo"
-                    android:textColor="@color/blue"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/sw_state"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <si.kostakdd.ui.main.MySwitch
-                    android:id="@+id/sw_state"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-
-                    android:elegantTextHeight="true"
-                    android:singleLine="false"
-                    android:text="@string/change_state"
-                    android:textAlignment="center"
-                    android:textColor="@color/blue"
-                    android:textOff="NE DELA"
-                    android:textOn="DELA"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/btn_assign"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:showText="true"
-                    app:splitTrack="false"
-                    app:switchTextAppearance="@style/mySwitch" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                app:layout_constraintTop_toBottomOf="@+id/txtOpis"
+                tools:visibility="visible" />
 
             <TableRow
                 android:id="@+id/expandedItems"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
                 android:orientation="vertical"
                 android:paddingBottom="16dp"
                 android:visibility="gone"
@@ -182,7 +139,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="5"
-                        android:gravity="bottom"
+                        android:gravity="center_horizontal"
                         android:maxLines="1"
                         android:paddingTop="2dp"
                         android:text="Info"
@@ -214,7 +171,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="5"
                         android:drawablePadding="-2sp"
-                        android:gravity="bottom"
+                        android:gravity="center_horizontal"
                         android:includeFontPadding="true"
                         android:maxLines="1"
                         android:text="Uredi"
@@ -246,7 +203,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="5"
-                        android:gravity="bottom"
+                        android:gravity="center_horizontal"
                         android:maxLines="1"
                         android:paddingTop="2dp"
                         android:text="Slika"
@@ -276,7 +233,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="5"
-                        android:gravity="bottom"
+                        android:gravity="center_horizontal"
                         android:maxLines="1"
                         android:paddingTop="2dp"
                         android:text="Lokacija"
@@ -287,17 +244,77 @@
 
             </TableRow>
 
-            <View
-                android:id="@+id/divider"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:background="@color/blue"
-                app:layout_constraintBottom_toTopOf="@+id/expandedItems"
+            <LinearLayout
+                android:id="@+id/edit_extra"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_corners_10dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingBottom="5dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtOpis" />
+                app:layout_constraintTop_toBottomOf="@+id/expandedItems"
+                tools:visibility="visible">
+
+                <Button
+                    android:id="@+id/btn_assign"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/round_corners_10dp"
+                    android:backgroundTint="@color/white"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:padding="10dp"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:text="Prevzemi opremo"
+                    android:textColor="@color/blue"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:elegantTextHeight="false"
+                    android:gravity="center_horizontal"
+                    android:text="@string/change_state"
+                    android:textAlignment="center"
+                    android:textColor="@color/blue"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <si.kostakdd.ui.main.MySwitch
+                    android:id="@+id/sw_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:capitalize="none"
+                    android:clickable="true"
+                    android:minHeight="48dp"
+                    android:scaleX="1.1"
+                    android:singleLine="false"
+                    android:soundEffectsEnabled="true"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/blue"
+                    android:textOff="NE DELA"
+                    android:textOn="DELA"
+                    android:textScaleX="2"
+                    android:thumb="@drawable/switch_selector"
+                    app:showText="true"
+                    app:splitTrack="false"
+                    app:switchPadding="10dp"
+                    app:switchTextAppearance="@style/textLayoutApperance"
+                    app:track="@drawable/switch_track" />
+
+            </LinearLayout>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

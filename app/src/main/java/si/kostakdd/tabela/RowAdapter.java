@@ -13,12 +13,12 @@ import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.Group;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
@@ -53,12 +53,12 @@ public class RowAdapter extends RecyclerView.Adapter<RowAdapter.RowViewHolder> i
         public  ImageView imageArrow;
         public  TextView row_num;
        // public  JSONObject Json;
-        public  TextView txtopis,inv_st, tv_edit;
+        public  TextView txtopis,inv_st, tv_edit,tv;
 
         public  ConstraintLayout row;
-        public  TableRow expandeditems;
-        public  LinearLayout Edit,Pic,Loc, linLayInfo;
-        public  ConstraintLayout edit_extra;
+        public Group expandeditems;
+        public  LinearLayout Edit,Pic,Loc, linLayInfo,edit_extra;
+        //public  ConstraintLayout ;
         public  Button btn_assign;
         public  MySwitch sw_state;
         private final String currentUser=((MainActivity)recycler.getContext()).username;
@@ -77,14 +77,17 @@ private void expand_extraEdit(String assignTo) {
 
     boolean test = currentUser.equals(assignTo);
     //Log.d("user=user",test+"ok");
-    if(test){
 
+    if(test){
+        tv.setVisibility(View.VISIBLE);
         btn_assign.setVisibility(View.GONE);
         sw_state.setVisibility(View.VISIBLE);
+
 
     } else {
         btn_assign.setVisibility(View.VISIBLE);
         sw_state.setVisibility(View.GONE);
+        tv.setVisibility(View.GONE);
     }
     tv_edit.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.card_arrow_up, 0);
     tv_edit.refreshDrawableState();
@@ -117,7 +120,7 @@ private void showUpdateStatusDialog(String inv,boolean isChecked) {
             //We have added a title in the custom layout. So let's disable the default title.
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             //The user will be able to cancel the dialog bu clicking anywhere outside the dialog.
-            dialog.setCancelable(true);
+            dialog.setCancelable(false);
             dialog.getWindow().setBackgroundDrawableResource(R.drawable.my_dialog);
             //Mention the name of the layout of your custom dialog.
             dialog.setContentView(R.layout.dialog_main);
@@ -214,7 +217,7 @@ public RowViewHolder(View view) {
             tv_edit = view.findViewById(R.id.tv_edit);
             imageLoc = view.findViewById(R.id.imageLoc);
             imageArrow = view.findViewById(R.id.kartica_expand);
-            expandeditems=view.findViewById(R.id.expandedItems);
+            expandeditems=view.findViewById(R.id.group_exp_itm);
             Edit=view.findViewById(R.id.Edit);
             Loc=view.findViewById(R.id.Loc);
             linLayInfo=view.findViewById(R.id.linLayInfo);
@@ -222,7 +225,8 @@ public RowViewHolder(View view) {
             edit_extra=view.findViewById(R.id.edit_extra);
             btn_assign=view.findViewById(R.id.btn_assign);
             sw_state=view.findViewById(R.id.sw_state);
-
+            tv=view.findViewById(R.id.tv);
+            sw_state.setSwitchMinWidth(view.getWidth());
 
 
         }
@@ -299,26 +303,27 @@ public RowViewHolder(View view) {
         holder.row.setOnClickListener(v -> {
             final boolean visibility = holder.expandeditems.getVisibility() == View.VISIBLE;
             final int adapterPosition = holder.getAdapterPosition();
+            //Toast.makeText(recycler.getContext(), "Position " + adapterPosition + "Prev postizion: "+ prev_expanded, Toast.LENGTH_SHORT).show();
             if (!visibility) {///če je kartica zaprta
 
                 holder.expand_cardView(); ////odpre kartico
                 filteredRowList.get(adapterPosition).setExpanded(true);///označi kartico kot odprto
-                if (prev_expanded != -1 && prev_expanded != position)
-                    {///če ni prvi klik na kartico ali če ni klik na isto kartico
+                if (prev_expanded != -1 && prev_expanded != adapterPosition) {///če ni prvi klik na kartico ali če ni klik na isto kartico
                     if (recycler.findViewHolderForLayoutPosition(prev_expanded) != null)
-                        {///Če je element še viden na zaslonu
-                            recycler.findViewHolderForLayoutPosition(prev_expanded).itemView.setActivated(false); //zapre prej odprto kartico
-                            recycler.findViewHolderForLayoutPosition(prev_expanded).itemView.findViewById(R.id.expandedItems).setVisibility(View.GONE);
+                           {///Če je element še viden na zaslonu
+                        //         recycler.findViewHolderForLayoutPosition(prev_expanded).itemView.setActivated(false); //zapre prej odprto kartico
+                        //         recycler.findViewHolderForLayoutPosition(prev_expanded).itemView.findViewById(R.id.expandedItemsGroup).setVisibility(View.GONE);
                         //označi pozicijo odprte kartice
 
 
-                    }
+                        // }
                         filteredRowList.get(prev_expanded).setExpanded(false);
+                        notifyItemChanged(prev_expanded);
+                    }
                 }
-
                 prev_expanded=adapterPosition;
             } else { /////Če je kartica odprta
-                holder.collapse_cardView(); //zapre karrtico
+                holder.collapse_cardView(); //zapre kartico
                 filteredRowList.get(adapterPosition).setExpanded(false);
 
 
@@ -333,6 +338,9 @@ public RowViewHolder(View view) {
         {///IKONA INFO
             //Toast.makeText(recycler.getContext(), "klik INFO", Toast.LENGTH_SHORT).show();
            // ((MainActivity) recycler.getContext()).findEquipment(lineItem.inv_st, "NFC", "klik na tabelo");
+
+                   // throw new RuntimeException("Test Crash"); // Force a crash
+
         });
 
 /////////////////ZA klike na ikone oz layout ikon na expnded kartici

@@ -22,11 +22,6 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="update_denied">Če zavrnete posodobitve, je lahko pričakovati nepravilno delovanje aplikacije, zato aplikacijo posodobite čimprej! \n\n Posvetujte se s skladiščnikom.</string>
     <string name="id_number">Inventrana številka</string>
-    <string name="naziv_osn_sredstva">Naziv osnovnega sredstva - opis</string>
-    <string name="assignedTo">Zadolžen za opremo</string>
-    <string name="location">Prevzeto na naslovu:</string>
-    <string name="status_opreme">Status opreme</string>
-    <string name="last_users">Zadnji uporabniki</string>
     <string name="change_state">SPREMENI STANJE OPREME</string>
     <string name="custom_dialog">Sprememba stanja opreme</string>
     <string name="opis_napake">Opis napake</string>

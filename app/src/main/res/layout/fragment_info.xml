@@ -1,141 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/Main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#90000000"
+    android:background="@drawable/body_background"
     android:clickable="true"
-    tools:context=".ui.main.ImageFragment">
+    tools:context=".ui.main.MapFragment"
+    android:focusable="true">
 
 
     <ImageView
         android:id="@+id/iv_close_fragement"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="5dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:clickable="true"
-        android:src="@drawable/frame_close" />
+        android:src="@drawable/frame_close"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:focusable="true" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="52dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="5dp"
-        android:background="@color/white"
-        android:orientation="vertical" >
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="2dp"
+        android:background="@drawable/round_corners_top"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_close_fragement" />
 
-        <TextView
-            android:id="@+id/textView1"
-            style="@style/MaterialAlertDialog.MaterialComponents.Title.Text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/id_number"
-            android:textAlignment="center"
-            android:textSize="25sp" />
 
-        <TextView
-            android:id="@+id/tv_id_number"
-            style="@style/TextAppearance.MaterialComponents.Subtitle1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="N/A"
-            android:textAlignment="center"
-            android:textSize="25sp" />
-
-        <TextView
-            android:id="@+id/textView3"
-            style="@style/MaterialAlertDialog.MaterialComponents.Title.Text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/naziv_osn_sredstva"
-            android:textAlignment="center"
-            android:textSize="25sp" />
-
-        <TextView
-            android:id="@+id/tv_description"
-            style="@style/TextAppearance.MaterialComponents.Subtitle1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="N/A"
-            android:textAlignment="center"
-            android:textSize="25sp" />
-
-        <TextView
-            android:id="@+id/textView5"
-            style="@style/MaterialAlertDialog.MaterialComponents.Title.Text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/assignedTo"
-            android:textAlignment="center"
-            android:textSize="25sp" />
-
-        <TextView
-            android:id="@+id/tv_assigned_to"
-            style="@style/TextAppearance.MaterialComponents.Subtitle1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="N/A"
-            android:textAlignment="center"
-            android:textSize="25sp" />
-
-        <TextView
-            android:id="@+id/textView7"
-            style="@style/MaterialAlertDialog.MaterialComponents.Title.Text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/location"
-            android:textAlignment="center"
-            android:textSize="25sp" />
-
-        <TextView
-            android:id="@+id/tv_location"
-            style="@style/TextAppearance.MaterialComponents.Subtitle1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="N/A"
-            android:textAlignment="center"
-            android:textSize="25sp" />
-        <TextView
-            android:id="@+id/textView9"
-            style="@style/MaterialAlertDialog.MaterialComponents.Title.Text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/status_opreme"
-            android:textAlignment="center"
-            android:textSize="25sp" />
-
-        <TextView
-            android:id="@+id/tv_eq_status"
-            style="@style/TextAppearance.MaterialComponents.Subtitle1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="N/A"
-            android:textAlignment="center"
-            android:textSize="25sp" />
-
-        <TextView
-            android:id="@+id/textView11"
-            style="@style/MaterialAlertDialog.MaterialComponents.Title.Text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/last_users"
-            android:textAlignment="center"
-            android:textSize="25sp" />
-
-        <TextView
-            android:id="@+id/tv_last_users"
-            style="@style/TextAppearance.MaterialComponents.Subtitle1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="N/A"
-            android:textAlignment="center"
-            android:textSize="25sp" />
-
-    </LinearLayout>
-
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

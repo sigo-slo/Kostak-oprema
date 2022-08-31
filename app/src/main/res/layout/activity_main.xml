@@ -24,87 +24,185 @@
             android:layout_height="wrap_content"
 
 
-            android:layout_marginStart="16dp"
             android:elegantTextHeight="true"
             android:hint="@string/user"
             android:text="@string/user"
             android:textAlignment="viewStart"
             android:textColor="@color/white"
-            android:textSize="22sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/barImageView"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_nfc"
             app:layout_constraintTop_toTopOf="@+id/barImageView" />
 
         <LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="wrap_content"
+            android:id="@+id/topBarHolder"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="42dp"
-            android:layout_marginEnd="5dp"
+            android:layout_marginTop="24dp"
             android:orientation="horizontal"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
+
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/TV_username">
 
-            <ImageView
-                android:id="@+id/iv_search"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/searchInventory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_weight="1"
-                android:background="@drawable/round_corners_10dp"
-                android:backgroundTint="@color/kostak_green"
-                android:padding="8dp"
-                android:visibility="visible"
-                app:srcCompat="@drawable/search_phone"
-                tools:visibility="visible" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="parent"
+                android:layout_margin="8dp">
 
-            <ImageView
-                android:id="@+id/iv_search_global"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_weight="1"
-                android:background="@drawable/round_corners_10dp"
-                android:backgroundTint="@color/kostak_green"
-                android:padding="8dp"
-                app:srcCompat="@drawable/global_search" />
+                <ImageView
+                    android:id="@+id/iv_search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/round_corners_10dp"
+                    android:backgroundTint="@color/kostak_green"
+                    android:padding="8dp"
+                    android:visibility="visible"
 
-            <ImageView
-                android:id="@+id/iv_scan"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_weight="1"
-                android:background="@drawable/round_corners_10dp"
-                android:backgroundTint="@color/kostak_green"
-                android:padding="8dp"
-                app:srcCompat="@drawable/ic_scan" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/search_phone"
+                    tools:visibility="visible" />
 
-            <ImageView
-                android:id="@+id/iv_admin"
+                <TextView
+                    android:id="@+id/tv1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:maxLines="2"
+                    android:scrollHorizontally="false"
+                    android:text="Moja oprema                   "
+                    android:textAlignment="center"
+                    app:layout_constraintEnd_toEndOf="@+id/iv_search"
+                    app:layout_constraintStart_toStartOf="@id/iv_search"
+                    app:layout_constraintTop_toBottomOf="@id/iv_search" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/globalSearchInventory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_weight="1"
-                android:background="@drawable/round_corners_10dp"
-                android:backgroundTint="@color/kostak_green"
-                android:padding="8dp"
-                android:visibility="gone"
-                app:srcCompat="@drawable/ic_admin"
-                tools:visibility="visible" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="parent"
+                android:layout_margin="8dp">
+>
+
+                <ImageView
+                    android:id="@+id/iv_search_global"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/round_corners_10dp"
+                    android:backgroundTint="@color/kostak_green"
+                    android:padding="8dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/global_search" />
+
+                <TextView
+                    android:id="@+id/tv2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:maxLines="2"
+                    android:scrollHorizontally="false"
+                    android:text="Išči v bazi"
+                    android:textAlignment="center"
+                    app:layout_constraintEnd_toEndOf="@+id/iv_search_global"
+                    app:layout_constraintStart_toStartOf="@id/iv_search_global"
+                    app:layout_constraintTop_toBottomOf="@+id/iv_search_global" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/CLScanQR"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="parent"
+                android:layout_margin="8dp">
+                >
+
+                <ImageView
+                    android:id="@+id/iv_scan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/round_corners_10dp"
+                    android:backgroundTint="@color/kostak_green"
+                    android:padding="8dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_scan" />
+
+                <TextView
+                    android:id="@+id/tv3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:maxLines="2"
+                    android:scrollHorizontally="false"
+                    android:text="Preberi QR"
+
+                    android:textAlignment="center"
+                    app:layout_constraintEnd_toEndOf="@+id/iv_scan"
+                    app:layout_constraintStart_toStartOf="@id/iv_scan"
+                    app:layout_constraintTop_toBottomOf="@+id/iv_scan" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/CLAdmin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="parent"
+                android:layout_margin="8dp">
+
+                <ImageView
+                    android:id="@+id/iv_admin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/round_corners_10dp"
+                    android:backgroundTint="@color/kostak_green"
+                    android:padding="8dp"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_admin"
+                    tools:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/tv4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:maxLines="2"
+                    android:scrollHorizontally="false"
+                    android:text="Admin"
+                    android:textAlignment="center"
+                    app:layout_constraintEnd_toEndOf="@+id/iv_admin"
+                    app:layout_constraintStart_toStartOf="@id/iv_admin"
+                    app:layout_constraintTop_toBottomOf="@id/iv_admin" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         </LinearLayout>
 
         <ImageView
             android:id="@+id/barImageView"
-            android:layout_width="70dp"
-            android:layout_height="85dp"
+            android:layout_width="50dp"
+            android:layout_height="35dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -125,8 +223,8 @@
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-            tools:visibility="gone" />
+            app:layout_constraintTop_toBottomOf="@+id/topBarHolder"
+            tools:visibility="visible" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/RV"
@@ -135,7 +233,7 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="5dp"
-            android:background="@drawable/round_corners_top"
+            android:background="@drawable/round_corners_10dp"
             android:paddingTop="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -148,22 +246,21 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_weight="1"
-            app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
-            app:layout_constraintEnd_toEndOf="@+id/RV"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/linearLayout2"
+            android:contentDescription="TODO"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_nfc"
-            tools:visibility="visible"
-            android:contentDescription="TODO" />
+            tools:visibility="visible" />
 
         <FrameLayout
             android:id="@+id/fragment_viewer"
-            android:layout_width="409dp"
+            android:layout_width="0dp"
             android:layout_height="0dp"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@id/barImageView"
             tools:visibility="gone">
 
         </FrameLayout>

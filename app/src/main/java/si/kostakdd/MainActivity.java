@@ -99,7 +99,7 @@ import si.kostakdd.parser.NdefMessageParser;
 import si.kostakdd.record.ParsedNdefRecord;
 import si.kostakdd.tabela.LineItem;
 import si.kostakdd.tabela.RowAdapter;
-import si.kostakdd.ui.main.AdminFragment;
+import si.kostakdd.ui.main.Admin_insert_equip;
 import si.kostakdd.ui.main.ImageFragment;
 import si.kostakdd.ui.main.MapFragment;
 
@@ -134,12 +134,7 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-        searchView.findViewById(R.id.search).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                stopSearch();
-            }
-        });
+        searchView.findViewById(R.id.search).setOnClickListener(view -> stopSearch());
 
     }
     boolean isNormalSearch,isGlobalSearch;
@@ -158,7 +153,9 @@ public class MainActivity extends AppCompatActivity {
         if(isGlobalSearch){
             updateUserEquipmentTable(username) ;
             iv_search_global.setBackgroundTintList(getResources().getColorStateList(R.color.kostak_green));
-        }else {iv_search.setBackgroundTintList(getResources().getColorStateList(R.color.kostak_green));}
+        } else {
+                iv_search.setBackgroundTintList(getResources().getColorStateList(R.color.kostak_green));
+            }
         isNormalSearch=false;
         isGlobalSearch=false;
 
@@ -342,7 +339,7 @@ public class MainActivity extends AppCompatActivity {
     // ////////////////////////////////////////////////////////Komunikacija s strežnikom
     private boolean equipmenSearch=false;
     public void findEquipment(String barcode, String scanType, String action) {
-        //Log.d("FIND_EQUIPMENT;", scanType + " | " + barcode + " | " + action);
+        Log.d("FIND_EQUIPMENT;", scanType + " | " + barcode + " | " + action);
         if (barcode.length() > 2) {
             if (scanType.equals("barcode")) {
                 barcode = barcode.substring(1, barcode.length() - 1);
@@ -365,8 +362,9 @@ public class MainActivity extends AppCompatActivity {
                     if (success==1){
                         Log.d("getEquipmentData:",inv_st +"-"+ message);
                         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-                        updateTable(responce);
                         equipmenSearch=true;
+                        updateTable(responce);
+
                     }
                 } catch (JSONException e) {
 
@@ -592,6 +590,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void displayMsgs(NdefMessage[] msgs, String action) {
+        //Toast.makeText(this,"NFC"+msgs+"|"+action,Toast.LENGTH_SHORT).show();
         if (msgs == null || msgs.length == 0)
             return;
 
@@ -611,6 +610,7 @@ public class MainActivity extends AppCompatActivity {
 
         inv_st = builder.toString();
         //TODO
+
         findEquipment(inv_st, "NFC", action);
     }
 
@@ -818,13 +818,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void resolveIntent(Intent intent) {
         String action = intent.getAction();
-        Log.d("NFC action",action);
+        Log.d("ResolveIntentAction",action);
         if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(action)
                 || NfcAdapter.ACTION_TECH_DISCOVERED.equals(action)
                 || NfcAdapter.ACTION_NDEF_DISCOVERED.equals(action)) {
             Parcelable[] rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);//EXTRA_ID);//EXTRA_NDEF_MESSAGES);
             NdefMessage[] msgs;
-
+            equipmenSearch=true;
             if (rawMsgs != null) {
                 msgs = new NdefMessage[rawMsgs.length];
 
@@ -877,7 +877,8 @@ public class MainActivity extends AppCompatActivity {
 
                 pendingIntent = getActivity(this, 0,
                         new Intent(this, this.getClass())
-                                .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+                                .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), PendingIntent.FLAG_MUTABLE);
+
                 iv_nfc.setVisibility(View.VISIBLE);
                 if (!nfcAdapter.isEnabled()) { // in če ni omogočena
                     // napoti uporabnika do nastavitev brezžičnih povezav, kjer je tudi NFC
@@ -933,14 +934,14 @@ public class MainActivity extends AppCompatActivity {
 
             }
         }
-        updateUserEquipmentTable(username);
+        //updateUserEquipmentTable(username);
     }
 
     @Override
     public void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         String action = intent.getAction();
-        Log.d("onNewIntent----",action);
+       // Log.d("onNewIntent----",action);
         setIntent(intent);
         resolveIntent(intent);
     }
@@ -955,7 +956,7 @@ public class MainActivity extends AppCompatActivity {
             {
                 Log.d(str, " REQUEST_CODE_SCAN_QR");
                 inv_st = data.getStringExtra("Inv_št");
-                findEquipment(inv_st,"barcode", getIntent().getAction());
+                findEquipment(inv_st,"barcode", data.getAction());
                 requestCode=333;
             } else  if (requestCode == REQUEST_CODE_TAKEPICTURE)
             {
@@ -1059,7 +1060,7 @@ public class MainActivity extends AppCompatActivity {
                 mFT.add(R.id.fragment_viewer,MF,"map").addToBackStack("map").commit();
                 break;
             case Constants.FRAGMENT_ADMIN:
-                AdminFragment MFa = AdminFragment.newInstance(data);
+                Admin_insert_equip MFa = Admin_insert_equip.newInstance(data);
                 FragmentManager mFMa = getSupportFragmentManager();
                 FragmentTransaction mFTa = mFMa.beginTransaction();
                 mFTa.setCustomAnimations(R.anim.enter_from_right,R.anim.exit_to_right,R.anim.enter_from_right,R.anim.exit_to_right);

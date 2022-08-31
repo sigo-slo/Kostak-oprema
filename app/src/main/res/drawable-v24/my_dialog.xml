@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <solid android:color="@color/white"/>
     <gradient
-        android:startColor="@color/dialog_start_color"
-        android:centerColor="@color/dialog_center_color"
-        android:endColor="@color/dialog_end_color"
+        android:startColor="@color/cardview_center_color"
+        android:centerColor="@color/cardview_center_color"
+        android:endColor="@color/cardview_center_color"
         android:angle="90"
         />
     <stroke android:width="1dp" android:color="@color/blue" />

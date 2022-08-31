@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:state_checked="true" android:color = "@color/kostak_green">
+        <shape
+            android:shape="rectangle"
+            android:visible="true"
+            android:dither="true"
+            android:useLevel="false">
+            <gradient
+                android:startColor="@color/body_background_color"
+                android:centerColor="@color/kostak_green"
+                android:endColor="@color/body_background_color"
+                android:angle="270"/>
+            <corners
+                android:radius="15dp"/>
+            <size
+                android:width="50dp"
+                android:height="30dp" />
+            <stroke
+                android:width="4dp"
+                android:color="#0000ffff"/>
+        </shape>
+
+     </item>
+    <item android:state_checked="false" android:color = "@color/red">
+        <shape
+            android:shape="rectangle"
+            android:visible="true"
+            android:dither="true"
+            android:useLevel="false">
+            <gradient
+                android:startColor="@color/body_background_color"
+                android:centerColor="@color/red"
+                android:endColor="@color/body_background_color"
+                android:angle="270"/>
+            <corners
+                android:radius="15dp"/>
+            <size
+                android:width="55dp"
+                android:height="30dp" />
+            <stroke
+                android:width="4dp"
+                android:color="#0000ffff"/>
+        </shape>
+    </item>
+</selector>
