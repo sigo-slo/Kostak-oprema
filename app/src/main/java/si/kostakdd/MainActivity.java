@@ -462,7 +462,7 @@ public class MainActivity extends AppCompatActivity {
             outputStreamWriter.close();
             //Toast.makeText(this, "Datoteka "+ filename +" shranjena", Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
-            Log.d("Exception", "Napaka pri shranjevanju " + e.toString());
+            Log.d("Exception", "Napaka pri shranjevanju " + e);
         }
     }
 
@@ -644,8 +644,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void updateUserEquipmentTable(String query) {
        getString(result -> {
-           String message="";
-           int success = 0;
+           String message;
+           int success;
            try {
                JSONObject responce= new JSONObject(result);
                message = responce.getString("message");
@@ -698,11 +698,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void showWirelessSettings() {
         // Toast.makeText(this, "Za uporabo NFC čitalnika je potrebno v nastavitvah omogočiti NFC.", Toast.LENGTH_SHORT).show();
-        if (android.os.Build.VERSION.SDK_INT >= 16) {
-            startActivity(new Intent(android.provider.Settings.ACTION_NFC_SETTINGS));
-        } else {
-            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-        }
+        startActivity(new Intent(android.provider.Settings.ACTION_NFC_SETTINGS));
     }
     //\ Pomožne funkcije
 
@@ -767,7 +763,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onLocationResult(LocationResult locationResult) {
                 // do work here
-                onLocationChanged(locationResult.getLastLocation());
+                onLocationChanged(Objects.requireNonNull(locationResult.getLastLocation()));
             }
         };
         // Create LocationSettingsRequest object using location request
@@ -877,7 +873,7 @@ public class MainActivity extends AppCompatActivity {
 
                 pendingIntent = getActivity(this, 0,
                         new Intent(this, this.getClass())
-                                .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), PendingIntent.FLAG_MUTABLE);
+                                .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
 
                 iv_nfc.setVisibility(View.VISIBLE);
                 if (!nfcAdapter.isEnabled()) { // in če ni omogočena

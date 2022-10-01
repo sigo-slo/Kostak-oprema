@@ -53,9 +53,7 @@ public class DownloadService extends IntentService {
             in = urlConnection.getInputStream();
             File dir = StorageUtils.getCacheDirectory(this);
             String apkName = urlStr.substring(urlStr.lastIndexOf("/") + 1);
-
             File apkFile = new File(dir, apkName);
-
             out = new FileOutputStream(apkFile);
             byte[] buffer = new byte[BUFFER_SIZE];
 
@@ -64,16 +62,15 @@ public class DownloadService extends IntentService {
             while ((byteread = in.read(buffer)) != -1) {
                 bytesum += byteread;
                 out.write(buffer, 0, byteread);
-
                 int progress = (int) (bytesum * 100L / bytetotal);
-                // 如果进度与之前进度相等，则不更新，如果更新太频繁，否则会造成界面卡顿
-                if (progress != oldProgress) {
+                 if (progress != oldProgress) {
                     notificationHelper.updateProgress(progress);
                 }
                 oldProgress = progress;
+                Log.d(TAG, "Prenos-"+progress );
             }
             // 下载完成
-
+            Log.d(TAG, "Prenos končan" );
             ApkUtils.installAPk(this, apkFile);
 
             notificationHelper.cancel();

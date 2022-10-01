@@ -48,7 +48,7 @@ public class NotificationHelper extends ContextWrapper {
         Intent myIntent = new Intent(this, DownloadService.class);
         myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         myIntent.putExtra(Constants.APK_DOWNLOAD_URL, apkUrl);
-        PendingIntent pendingIntent = PendingIntent.getService(this, 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getService(this, 0, myIntent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = getNofity(content)
                 .setContentIntent(pendingIntent);
@@ -63,7 +63,7 @@ public class NotificationHelper extends ContextWrapper {
         String text = this.getString(R.string.android_auto_update_download_progress, progress);
 
         PendingIntent
-                pendingintent = PendingIntent.getActivity(this, 0, new Intent(), PendingIntent.FLAG_UPDATE_CURRENT);
+                pendingintent = PendingIntent.getActivity(this, 0, new Intent(), PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
 
 
         NotificationCompat.Builder builder = getNofity(text)

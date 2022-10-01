@@ -78,7 +78,7 @@
                     android:layout_marginTop="8dp"
                     android:maxLines="2"
                     android:scrollHorizontally="false"
-                    android:text="Moja oprema                   "
+                    android:text="Moja oprema"
                     android:textAlignment="center"
                     app:layout_constraintEnd_toEndOf="@+id/iv_search"
                     app:layout_constraintStart_toStartOf="@id/iv_search"
